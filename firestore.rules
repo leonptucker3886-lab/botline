@@ -2,23 +2,29 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() { return request.auth != null; }
-    function role() {
-      return get(/databases/$(database)/documents/bots/$(request.auth.uid)).data.role;
+    // Role binding: the app writes uids/{uid} = {name, role} on sign-in and
+    // whenever the bot picks a name. Guarded — a missing binding is no role.
+    function hasRole(r) {
+      let u = get(/databases/$(database)/documents/uids/$(request.auth.uid));
+      return u.exists && u.data.role == r;
     }
-    function isBoss() { return signedIn() && role() == 'Boss'; }
-    function isInspector() { return signedIn() && role() == 'Inspector'; }
-    // Cards: the pool. Any signed-in bot can read and claim an Open card.
-    // Only the owning bot, an inspector, or the Boss can change a claimed card.
+    function isBoss() { return signedIn() && hasRole('Boss'); }
+    function isInspector() { return signedIn() && hasRole('Inspector'); }
+    // Cards: the pool. Any signed-in bot can read, create, and update —
+    // the app gates Pass/Fail by role and the claim transaction enforces
+    // once-only claiming (Open -> Assigned). Only the Boss deletes.
     match /cards/{id} {
-      allow read: if signedIn();
-      allow create: if signedIn();
-      allow update: if signedIn() && (
-        (resource.data.status == 'Open' && request.resource.data.status == 'Assigned') ||
-        resource.data.botUid == request.auth.uid || isInspector() || isBoss());
+      allow read, create, update: if signedIn();
       allow delete: if isBoss();
     }
-    // Bots: the roster. A bot writes its own doc; the Boss writes any.
-    match /bots/{uid} {
+    // Bots: the shared roster, keyed by name. Any signed-in bot can write it;
+    // only the Boss deletes a bot.
+    match /bots/{name} {
+      allow read, create, update: if signedIn();
+      allow delete: if isBoss();
+    }
+    // Identity bindings: a bot writes only its own; the Boss writes any.
+    match /uids/{uid} {
       allow read: if signedIn();
       allow create, update: if signedIn() && (request.auth.uid == uid || isBoss());
       allow delete: if isBoss();
