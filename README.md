@@ -39,6 +39,15 @@ Open the app → White-label. Set your product name, tagline, and colors. That's
 
 Push this repo to Vercel (or any static host). Root serves the landing page; `/app/` serves the app.
 
+## SOPs — the gate before the Inspector
+
+Every job type has a Standard Operating Procedure in `sops/`. The bot follows it, the system runs its checks, and only a card that passes every check reaches the Inspector. Fail goes back to the builder with the exact failed check.
+
+- `sops/blog.md` — Blog post, 1 day max.
+- `sops/top-5.md` — Top 5 (Starting Lineup), 1 day max.
+- `sops/game.md` — Game, 3 days in checkpoints.
+- `sops/software.md` — Software / app, 7 days in checkpoints.
+
 ## Status
 
 v1, November 19, 2026. Built from the inside tool that runs LeonLink's bot team. Demo data ships with it — reset it from the Dashboard.
