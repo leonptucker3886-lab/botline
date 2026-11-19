@@ -120,6 +120,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <h1>Your bots, <span>at a glance.</span></h1>
 <p class="sub">What's open, what's stuck, who needs a nudge.</p>
 <div class="stats" id="stats"></div>
+<div class="row"><label for="whoami" style="margin:0;align-self:center">Working as</label><select id="whoami" style="width:220px"></select><span class="note">Who claims cards and whose role the pool matches.</span></div>
 <h2>Needs you</h2>
 <div id="needs"></div>
 <h2>Recent logs</h2>
@@ -195,6 +196,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <tbody></tbody></table></div>
 <h2>Add a bot</h2>
 <div class="row"><input type="text" id="bot-name" class="grow" placeholder="Bot name"><input type="text" id="bot-role" class="grow" placeholder="Role — e.g. Builder, Writer, Checker"><button class="btn2 go2" id="bot-add">Add bot</button></div>
+<div class="row"><button class="btn2 go2" id="btn-auto">Auto-assign me a card</button><span class="note">Best open card for the working-as role. Inspectors review, they don't take cards.</span></div>
 <p class="note">Paused bots get no new cards until you unpause them.</p>
 </section>
 
@@ -224,9 +226,20 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <label for="brand-color2">Accent color</label>
 <input type="color" id="brand-color2" value="#ff5da2">
 <button class="go" id="brand-save">Save branding</button>
+
+<h2>Sync — Firebase</h2>
+<p class="sub">The shared store every bot sees. Paste your web app config to turn it on; empty means this browser only.</p>
+<label for="fb-config">Firebase config (JSON)</label>
+<textarea id="fb-config" placeholder='{"apiKey":"...","authDomain":"...","projectId":"...","storageBucket":"...","messagingSenderId":"...","appId":"..."}'></textarea>
+<div class="row"><button class="go" id="fb-save">Save &amp; connect</button><button class="btn2" id="fb-off">Turn off sync</button></div>
+<p class="note" id="fb-status">Sync off — this browser only.</p>
+<p class="note">Bots sign in anonymously — no email, no password. One login each, free tier. Rules live in firestore.rules in the repo.</p>
 <p class="note">This rebrands the app in this browser. Ship it under your own domain and it's yours end to end.</p>
 </section>
 </main>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 (function(){
 "use strict";
@@ -250,13 +263,116 @@ function demoCards(){return [
 ];}
 function demoBots(){return [
  {name:"Scout",role:"Research & writing",status:"Working",card:"B2",seen:"just now"},
- {name:"Forge",role:"Builder",status:"Stalled",card:"B1",seen:"3h ago"}
+ {name:"Forge",role:"Builder",status:"Stalled",card:"B1",seen:"3h ago"},
+ {name:"Gadget",role:"Worker",status:"Idle",card:"",seen:"just now"}
 ];}
 var cards=store("botline-v1")||demoCards();
 var bots=store("botline-bots")||demoBots();
 var inbox=store("botline-inbox")||[{who:"Forge",when:today(),text:"Blocked on B3 — need to know: save links locally or in the cloud?",card:"B3",read:false}];
 var brand=store("botline-brand")||{name:"Botline",tag:"Run your bots like a team.",color:"#22e6c8",color2:"#ff5da2"};
-function saveAll(){store("botline-v1",cards);store("botline-bots",bots);store("botline-inbox",inbox);store("botline-brand",brand);}
+
+/* ---- Firebase sync (shared store every bot sees) ---- */
+var FB_CONFIG=store("botline-fb-config")||null;
+var fbReady=false,fbUid=null,fbApplying=false,fbLastCards="",fbLastBots="";
+var whoami=store("botline-whoami")||"Boss";
+function fbStatus(t){var e=document.getElementById("fb-status");if(e)e.textContent=t;}
+function myRole(){if(whoami==="Boss")return "Boss";var b=null;bots.forEach(function(x){if(x.name===whoami)b=x;});return b?b.role:"";}
+function roleTypes(role){
+ if(/inspector/i.test(role||""))return null; /* inspectors review, they don't take cards */
+ if(/writ|research|word/i.test(role||""))return ["Blog","Top 5"];
+ if(/build|game|dev/i.test(role||""))return ["Game","Software"];
+ return []; /* Worker / Boss / anything else: any open card */
+}
+function fbDb(){try{return firebase.firestore();}catch(e){return null;}}
+function fbSave(){
+ if(!fbReady)return;
+ try{
+  var db=fbDb();if(!db)return;
+  fbApplying=true;
+  cards.forEach(function(c){db.collection("cards").doc(c.id).set(JSON.parse(JSON.stringify(c)));});
+  bots.forEach(function(b){db.collection("bots").doc(b.name).set(JSON.parse(JSON.stringify(b)));});
+  db.collection("meta").doc("brand").set(JSON.parse(JSON.stringify(brand)));
+  fbLastCards=JSON.stringify(cards);fbLastBots=JSON.stringify(bots);
+  setTimeout(function(){fbApplying=false;},500);
+ }catch(e){fbApplying=false;fbStatus("Sync write failed: "+e.message);}
+}
+function fbListen(){
+ var db=fbDb();if(!db)return;
+ db.collection("cards").onSnapshot(function(snap){
+  if(fbApplying)return;
+  var arr=[];snap.forEach(function(d){arr.push(d.data());});
+  if(!arr.length)return;
+  var js=JSON.stringify(arr);
+  if(js===fbLastCards)return;
+  fbLastCards=js;cards=arr;saveLocalOnly();renderCurrent();
+ });
+ db.collection("bots").onSnapshot(function(snap){
+  if(fbApplying)return;
+  var arr=[];snap.forEach(function(d){arr.push(d.data());});
+  if(!arr.length)return;
+  var js=JSON.stringify(arr);
+  if(js===fbLastBots)return;
+  fbLastBots=js;bots=arr;saveLocalOnly();renderCurrent();
+ });
+ db.collection("meta").doc("brand").onSnapshot(function(doc){
+  if(fbApplying||!doc.exists)return;
+  brand=doc.data();saveLocalOnly();applyBrand();
+ });
+}
+function saveLocalOnly(){store("botline-v1",cards);store("botline-bots",bots);store("botline-inbox",inbox);store("botline-brand",brand);}
+function renderCurrent(){
+ var v=document.querySelector(".view.on");
+ if(!v)return;
+ var id=v.id.replace("v-","");
+ if(id==="dash")renderDash();else if(id==="board")renderBoard();else if(id==="bots")renderBots();
+ else if(id==="inbox")renderInbox();else if(id==="card"&&currentCard)renderCard();
+}
+function fbInit(){
+ var cfg=FB_CONFIG;
+ if(!cfg||!window.firebase){fbStatus("Sync off — this browser only.");return;}
+ try{
+  firebase.initializeApp(cfg);
+  fbStatus("Connecting to Firebase…");
+  firebase.auth().signInAnonymously().then(function(cred){
+   fbUid=cred.user.uid;fbReady=true;
+   fbStatus("Synced — signed in as "+fbUid.slice(0,8)+"… (anonymous, no email).");
+   fbListen();fbSave();renderDash();
+  }).catch(function(e){fbStatus("Firebase sign-in failed: "+e.message);});
+ }catch(e){fbStatus("Firebase init failed: "+e.message);}
+}
+function claimCard(id){
+ var c=null;cards.forEach(function(x){if(x.id===id)c=x;});
+ if(!c||c.status!=="Open"){alert("Already taken — pick another.");return;}
+ if(whoami==="Boss"&&!confirm("Claim "+id+" as Boss?"))return;
+ if(!fbReady){
+  c.status="Assigned";c.bot=whoami;c.botUid=fbUid||"";
+  addLog(c,whoami,"Claimed "+id+" from the pool.");
+  return;
+ }
+ var db=fbDb();if(!db)return;
+ var ref=db.collection("cards").doc(id);
+ db.runTransaction(function(tx){
+  return tx.get(ref).then(function(doc){
+   if(!doc.exists||doc.data().status!=="Open")throw new Error("taken");
+   var d=doc.data();var logs=d.logs||[];
+   logs.push({who:whoami,when:today(),text:"Claimed "+id+" from the pool."});
+   tx.update(ref,{status:"Assigned",bot:whoami,botUid:fbUid,logs:logs});
+  });
+ }).then(function(){fbStatus("Claimed "+id+".");})
+  .catch(function(){alert("Someone just took it — pick another.");renderCurrent();});
+}
+function autoAssign(){
+ var role=myRole();
+ var types=roleTypes(role);
+ if(types===null){alert("Inspectors review — they don't take cards.");return;}
+ var pool=cards.filter(function(c){return c.status==="Open"&&(types.length===0||types.indexOf(c.type)>=0);});
+ pool.sort(function(a,b){return (PRI[a.priority]-PRI[b.priority])||String(a.deadline).localeCompare(String(b.deadline));});
+ if(!pool.length){alert("The pool is empty for your role.");return;}
+ claimCard(pool[0].id);
+ if(!fbReady)renderCurrent();
+}
+
+function saveAll(){store("botline-v1",cards);store("botline-bots",bots);store("botline-inbox",inbox);store("botline-brand",brand);if(fbReady&&!fbApplying)fbSave();}
 function applyBrand(){
  document.documentElement.style.setProperty("--brand",brand.color);
  document.documentElement.style.setProperty("--brand2",brand.color2);
@@ -310,6 +426,8 @@ function renderDash(){
  var unread=inbox.filter(function(m){return !m.read;}).length;
  var badge=document.getElementById("inbox-badge");
  badge.hidden=unread===0;badge.textContent=unread;
+ var ws=document.getElementById("whoami");
+ if(ws){ws.innerHTML='<option>Boss</option>'+bots.map(function(b){return '<option>'+esc(b.name)+'</option>';}).join("");ws.value=whoami;}
 }
 var tf="All";
 function renderBoard(){
@@ -552,7 +670,7 @@ function renderCard(){
  +'<p class="meta">Given <b>'+esc(c.date)+'</b> · Responsible: <b>'+esc(c.bot||"Unassigned")+'</b> · <span class="due'+(over?" over":"")+'">'+esc(due)+'</span> ('+esc(c.deadline)+')</p>'
  +'<p class="sub">'+esc(c.desc||"")+'</p>'
  +'<div class="banner" id="banner">Escalated — "What\'s happening?" sent to '+esc(c.bot||"the builder")+'\'s inbox. They\'re expected to answer on the message board.</div>'
- +'<div class="row"><button class="btn2 go2" id="btn-done"'+(gateOk?"":" disabled")+'>Mark done — send to review</button><button class="btn2 warn" id="btn-esc">Escalate — What\'s happening?</button><button class="btn2 warn" id="btn-del">Delete card</button></div>'
+ +'<div class="row"><button class="btn2 go2" id="btn-done"'+(gateOk?"":" disabled")+'>Mark done — send to review</button><button class="btn2 warn" id="btn-esc">Escalate — What\'s happening?</button><button class="btn2 warn" id="btn-del">Delete card</button>'+(c.status==="Open"?'<button class="btn2 go2" id="btn-claim">Claim this card</button>':"")+'</div>'
 +(gateOk?"":'<p class="note">Gate first: log the upload and run the SOP checks below. This button opens only when the gate passes.</p>')
 +'<h2>Upload + SOP gate<small>Log the upload, then run the checks. The gate must pass before review.</small></h2>'
 +'<div class="box upbox">'
@@ -584,7 +702,8 @@ function renderCard(){
  +AUTO_CHECKS.map(function(x){return '<li style="padding:8px 0 8px 26px;position:relative;border-bottom:1px solid var(--line);font-size:15px"><span style="position:absolute;left:0;color:var(--dim)">○</span>'+esc(x)+'</li>';}).join("")+'</ul>'
  +'<p class="note">The gate above runs these. ✓ = the system checked it. ○ = the reviewer verifies it.</p>';
  document.getElementById("btn-done").onclick=function(){if(!(c.gate&&c.gate.passed)){alert("Run the SOP checks first — the gate must pass before review.");return;}c.status="In review";addLog(c,c.bot||"You","Marked done — sent for review.");};
- document.getElementById("btn-save-up").onclick=function(){saveUpload();};
+ var bc=document.getElementById("btn-claim");if(bc)bc.onclick=function(){claimCard(c.id);};
+document.getElementById("btn-save-up").onclick=function(){saveUpload();};
  document.getElementById("btn-gate").onclick=function(){runGate();};
  document.getElementById("btn-esc").onclick=function(){
    addLog(c,"You","ESCALATED — What's happening? Pinged to "+(c.bot||"the builder")+"'s inbox.",true);
@@ -592,8 +711,8 @@ function renderCard(){
    var b=document.getElementById("banner");if(b)b.style.display="block";renderDash();
  };
  document.getElementById("btn-del").onclick=function(){if(confirm("Delete "+c.id+" for good?")){cards=cards.filter(function(x){return x!==c;});saveAll();show("board");}};
- document.getElementById("btn-pass").onclick=function(){c.status="Done";addLog(c,"Inspector","Passed. Card done.");};
- document.getElementById("btn-fail").onclick=function(){var n=prompt("What failed? (goes back to the builder as a note)");if(n===null)return;c.status="In progress";addLog(c,"Inspector","Failed — back to work. "+n);};
+ document.getElementById("btn-pass").onclick=function(){if(!(whoami==="Boss"||myRole()==="Inspector")){alert("Only the Inspector (or the Boss) can pass a card.");return;}c.status="Done";addLog(c,"Inspector","Passed. Card done.");};
+ document.getElementById("btn-fail").onclick=function(){if(!(whoami==="Boss"||myRole()==="Inspector")){alert("Only the Inspector (or the Boss) can fail a card.");return;}var n=prompt("What failed? (goes back to the builder as a note)");if(n===null)return;c.status="In progress";addLog(c,"Inspector","Failed — back to work. "+n);};
  document.getElementById("btn-log").onclick=function(){var t=document.getElementById("logtext").value.trim();if(!t)return;addLog(c,document.getElementById("who").value,t);};
  Array.prototype.forEach.call(el.querySelectorAll("[data-i]"),function(x){x.onchange=function(){c.reqs[+x.dataset.i].done=x.checked;saveAll();renderCard();};});
  Array.prototype.forEach.call(el.querySelectorAll("[data-cp]"),function(x){x.onchange=function(){c.cps[+x.dataset.cp].done=x.checked;saveAll();renderCard();};});
@@ -618,6 +737,7 @@ document.getElementById("bots-table").addEventListener("click",function(e){
  if(p){var b2=bots[+p.dataset.pause];b2.status=b2.status==="Paused"?"Idle":"Paused";saveAll();renderBots();}
  if(r){if(confirm("Remove this bot?")){bots.splice(+r.dataset.rm,1);saveAll();renderBots();renderDash();}}
 });
+document.getElementById("btn-auto").addEventListener("click",function(){autoAssign();});
 document.getElementById("bot-add").addEventListener("click",function(){
  var n=document.getElementById("bot-name").value.trim(),r=document.getElementById("bot-role").value.trim();
  if(!n)return;bots.push({name:n,role:r||"Unassigned",status:"Idle",card:"",seen:"just now"});
@@ -638,6 +758,10 @@ document.getElementById("inbox-list").addEventListener("click",function(e){
 document.querySelectorAll(".swatches button").forEach(function(b){
  b.addEventListener("click",function(){document.getElementById("brand-color").value=b.dataset.c;});
 });
+document.getElementById("whoami").addEventListener("change",function(){whoami=this.value;store("botline-whoami",whoami);renderDash();});
+document.getElementById("fb-save").addEventListener("click",function(){var v=document.getElementById("fb-config").value.trim();if(!v){alert("Paste the Firebase web config JSON first.");return;}try{var cfg=JSON.parse(v);if(!cfg.apiKey||!cfg.projectId)throw new Error("needs apiKey and projectId");store("botline-fb-config",cfg);location.reload();}catch(e){alert("That config didn't parse: "+e.message);}});
+document.getElementById("fb-off").addEventListener("click",function(){if(!confirm("Turn off Firebase sync? This browser keeps its local copy."))return;try{localStorage.removeItem("botline-fb-config");}catch(e){}location.reload();});
+var fc=document.getElementById("fb-config");if(fc&&FB_CONFIG)fc.value=JSON.stringify(FB_CONFIG);
 document.getElementById("brand-save").addEventListener("click",function(){
  brand.name=document.getElementById("brand-name").value.trim()||"Botline";
  brand.tag=document.getElementById("brand-tag").value.trim();
@@ -653,7 +777,7 @@ document.getElementById("btn-import").addEventListener("click",function(){docume
 document.getElementById("import-file").addEventListener("change",function(e){
  var f=e.target.files[0];if(!f)return;
  var r=new FileReader();
- r.onload=function(){try{var d=JSON.parse(r.result);if(d.cards)cards=d.cards;if(d.bots)bots=d.bots;if(d.inbox)inbox=d.inbox;if(d.brand)brand=d.brand;saveAll();applyBrand();renderDash();alert("Imported.");}catch(err){alert("That file didn't parse as Botline data.");}};
+ r.onload=function(){try{var d=JSON.parse(r.result);if(d.cards)cards=d.cards;if(d.bots)bots=d.bots;if(d.inbox)inbox=d.inbox;if(d.brand)brand=d.brand;saveAll();applyBrand();renderDash();alert("Imported."+(fbReady?" Pushed to Firebase.":""));}catch(err){alert("That file didn't parse as Botline data.");}};
  r.readAsText(f);
 });
 document.getElementById("btn-reset").addEventListener("click",function(){
@@ -661,7 +785,7 @@ document.getElementById("btn-reset").addEventListener("click",function(){
  cards=demoCards();bots=demoBots();inbox=[{who:"Forge",when:today(),text:"Blocked on B3 — need to know: save links locally or in the cloud?",card:"B3",read:false}];
  saveAll();renderDash();
 });
-applyBrand();renderDash();renderSubmit();
+applyBrand();renderDash();renderSubmit();fbInit();
 })();
 </script>
 </body>
