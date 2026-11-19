@@ -31,8 +31,8 @@ service cloud.firestore {
     }
     // Inbox: any bot can raise one; only the Boss clears it.
     match /inbox/{id} {
-      allow read, create: if signedIn();
-      allow update, delete: if isBoss();
+      allow read, create, update: if signedIn();
+      allow delete: if isBoss();
     }
     // Brand/meta: Boss only.
     match /meta/{id} {
