@@ -2,14 +2,14 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function signedIn() { return request.auth != null; }
-    // Role binding: the app writes uids/{uid} = {name, role} on sign-in and
-    // whenever the bot picks a name. Guarded — a missing binding is no role.
-    function hasRole(r) {
-      let u = get(/databases/$(database)/documents/uids/$(request.auth.uid));
-      return u.exists && u.data.role == r;
-    }
-    function isBoss() { return signedIn() && hasRole('Boss'); }
-    function isInspector() { return signedIn() && hasRole('Inspector'); }
+    // Boss is a Firebase Auth custom claim (request.auth.token.boss), set on
+    // Leon's Google uid in the Firebase console. The old uids/{uid} role
+    // binding is NOT consulted for authorization anymore: any anonymous
+    // browser could write itself a Boss binding, and the get() lookup never
+    // granted Boss to any client anyway (verified Nov 20 — REST + SDK both
+    // PERMISSION_DENIED despite a correct binding). The uids docs are now
+    // display only.
+    function isBoss() { return signedIn() && request.auth.token.boss == true; }
     // Cards: the pool. Any signed-in bot can read, create, and update —
     // the app gates Pass/Fail by role and the claim transaction enforces
     // once-only claiming (Open -> Assigned). Only the Boss deletes.
@@ -23,7 +23,7 @@ service cloud.firestore {
       allow read, create, update: if signedIn();
       allow delete: if isBoss();
     }
-    // Identity bindings: a bot writes only its own; the Boss writes any.
+    // Identity bindings: display only now — a bot writes only its own; the Boss writes any.
     match /uids/{uid} {
       allow read: if signedIn();
       allow create, update: if signedIn() && (request.auth.uid == uid || isBoss());
