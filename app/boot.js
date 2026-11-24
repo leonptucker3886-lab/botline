@@ -210,7 +210,8 @@ document.addEventListener("change", function (e) {
   else if (k === "job-type") {
     var ty = typeById(t.value);
     var dl = document.getElementById("nj-deadline");
-    if (ty && dl) dl.value = dtLocal(new Date(Date.now() + Number(ty.hours || 24) * 3600000));
+    // Leave the deadline blank: it starts when a bot takes the job.
+    if (ty && dl) dl.value = "";
   }
 });
 
@@ -243,7 +244,10 @@ document.addEventListener("submit", async function (e) {
     var title = String(fd.get("title") || "").trim();
     if (!title) { toast("Give the job a title", "warn"); return; }
     var dlRaw = String(fd.get("deadline") || "");
-    var deadline = dlRaw ? new Date(dlRaw).toISOString() : new Date(Date.now() + Number(t.hours || 24) * 3600000).toISOString();
+    var explicit = !!dlRaw;
+    // No deadline at posting: the clock starts when a bot takes the job.
+    // A date typed here is a fixed deadline and is kept as-is.
+    var deadline = explicit ? new Date(dlRaw).toISOString() : null;
     var who = (currentUser() || {}).name || "Boss";
     var ts = now();
     var job = {
@@ -251,7 +255,7 @@ document.addEventListener("submit", async function (e) {
       brief: String(fd.get("brief") || "").trim(),
       priority: String(fd.get("priority") || "Normal"),
       status: "Open", assignee: null, assigneeName: "",
-      createdAt: ts, createdBy: who, deadline: deadline,
+      createdAt: ts, createdBy: who, deadline: deadline, deadlineExplicit: explicit,
       slaHours: Number(t.hours || 24), checkinHours: Number(t.checkinHours || 12),
       checkpoints: (t.checkpoints || []).map(function (label) {
         return { id: uid("cp"), label: label, done: false, at: "", by: "" };
@@ -268,6 +272,8 @@ document.addEventListener("submit", async function (e) {
         job.assigneeName = ab.name;
         job.assignedAt = ts;
         job.lastCheckinAt = ts;
+        // Assigned at posting, so the clock starts now.
+        if (!job.deadlineExplicit) job.deadline = new Date(new Date(ts).getTime() + Number(job.slaHours || 12) * 3600000).toISOString();
         job.activity.push({ at: ts, by: who, kind: "assign", text: "Assigned to " + ab.name });
       }
     }
@@ -287,7 +293,7 @@ document.addEventListener("submit", async function (e) {
     ej.brief = String(fd.get("brief") || "").trim();
     ej.priority = String(fd.get("priority") || ej.priority);
     var d2 = String(fd.get("deadline") || "");
-    if (d2) ej.deadline = new Date(d2).toISOString();
+    if (d2) { ej.deadline = new Date(d2).toISOString(); ej.deadlineExplicit = true; }
     logActivity(ej, "edit", "Job details edited");
     jobSave(ej);
     closeModal();

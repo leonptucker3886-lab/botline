@@ -18,7 +18,7 @@ var DEFAULT_BRAND = { name: "Botline", tag: "Run your bots like a team.", accent
 
 var DEFAULT_TYPES = [
   {
-    id: "blog", name: "Blog", hours: 24, checkinHours: 6, color: "#6ea8fe",
+    id: "blog", name: "Blog", hours: 2, checkinHours: 6, color: "#6ea8fe",
     checkpoints: [
       "Brief locked: angle, audience, keyword",
       "Outline with sources approved",
@@ -29,7 +29,7 @@ var DEFAULT_TYPES = [
     ]
   },
   {
-    id: "top-5", name: "Top 5", hours: 24, checkinHours: 6, color: "#f5b544",
+    id: "top-5", name: "Top 5", hours: 2, checkinHours: 6, color: "#f5b544",
     checkpoints: [
       "Five picks, same category, no repeats",
       "Every pick has a working product link",
@@ -40,7 +40,7 @@ var DEFAULT_TYPES = [
     ]
   },
   {
-    id: "game", name: "Game", hours: 72, checkinHours: 12, color: "#a78bfa",
+    id: "game", name: "Game", hours: 24, checkinHours: 12, color: "#a78bfa",
     checkpoints: [
       "Concept and scope signed off",
       "Core loop playable",
@@ -51,7 +51,7 @@ var DEFAULT_TYPES = [
     ]
   },
   {
-    id: "software", name: "Software", hours: 168, checkinHours: 24, color: "#3ce0c2",
+    id: "software", name: "Software", hours: 24, checkinHours: 24, color: "#3ce0c2",
     checkpoints: [
       "Spec: the core flow written down",
       "First working build",
@@ -464,11 +464,17 @@ async function assignJob(id, botId, quiet) {
         return tx.get(ref).then(function (snap) {
           if (!snap.exists || snap.data().status !== "Open") throw new Error("taken");
           var d = snap.data();
-          tx.update(ref, {
+          // The deadline clock starts now, not at posting — unless the Boss
+          // set a fixed deadline (deadlineExplicit), which is kept as-is.
+          var upd = {
             status: "Active", assignee: bot.id, assigneeName: bot.name,
             assignedAt: ts, lastCheckinAt: ts,
             activity: (d.activity || []).concat([entry])
-          });
+          };
+          if (!d.deadlineExplicit) {
+            upd.deadline = new Date(new Date(ts).getTime() + Number(d.slaHours || 12) * 3600000).toISOString();
+          }
+          tx.update(ref, upd);
         });
       });
       if (!quiet) toast("Assigned " + job.id + " to " + bot.name, "good");
@@ -483,6 +489,9 @@ async function assignJob(id, botId, quiet) {
   job.assigneeName = bot.name;
   job.assignedAt = ts;
   job.lastCheckinAt = ts;
+  if (!job.deadlineExplicit) {
+    job.deadline = new Date(new Date(ts).getTime() + Number(job.slaHours || 12) * 3600000).toISOString();
+  }
   job.activity = (job.activity || []).concat([entry]);
   jobSave(job, quiet);
   if (!quiet) toast("Assigned " + job.id + " to " + bot.name, "good");
@@ -524,6 +533,8 @@ async function releaseJob(id) {
   job.assigneeName = "";
   job.assignedAt = "";
   job.lastCheckinAt = "";
+  // The clock restarts for the next bot, unless a fixed deadline was set.
+  if (!job.deadlineExplicit) job.deadline = null;
   jobSave(job);
   toast(id + " is back in the pool", "good");
 }
@@ -708,6 +719,7 @@ async function deleteBot(id) {
       j.assigneeName = "";
       j.assignedAt = "";
       j.lastCheckinAt = "";
+      if (!j.deadlineExplicit) j.deadline = null;
       logActivity(j, "release", "Released — " + b.name + " was removed from the roster");
       jobSave(j, true);
     }

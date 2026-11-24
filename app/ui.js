@@ -604,15 +604,14 @@ function jobModal() {
   }).join("");
   var bots = '<option value="">Leave open for a bot to claim</option>' + S.bots.filter(function (b) { return b.active !== false; })
     .map(function (b) { return '<option value="' + esc(b.id) + '">' + esc(b.name) + " — " + esc(b.role || "Bot") + "</option>"; }).join("");
-  var first = S.types[0];
   openModal("New job", '<form data-form="new-job">' +
     '<label for="nj-type">Project type</label><select id="nj-type" name="type" data-change="job-type">' + opts + "</select>" +
     '<label for="nj-title">Title</label><input id="nj-title" name="title" type="text" placeholder="What is being made" required>' +
     '<label for="nj-brief">Brief</label><textarea id="nj-brief" name="brief" placeholder="What it is, who it is for, what done looks like"></textarea>' +
     '<label for="nj-pri">Priority</label><select id="nj-pri" name="priority"><option>Urgent</option><option>High</option><option selected>Normal</option><option>Low</option></select>' +
     '<label for="nj-assignee">Assign to</label><select id="nj-assignee" name="assignee">' + bots + "</select>" +
-    '<label for="nj-deadline">Deadline</label><input id="nj-deadline" name="deadline" type="datetime-local" value="' +
-    dtLocal(new Date(Date.now() + ((first ? first.hours : 24) * 3600000))) + '">' +
+    '<label for="nj-deadline">Deadline</label><input id="nj-deadline" name="deadline" type="datetime-local" value="">' +
+    '<p class="field-note">Leave blank — the deadline starts when a bot takes the job. Pick a date only for a fixed deadline.</p>' +
     '<p class="field-note">Checkpoints are copied from the project type. Edit them on the job after posting.</p>' +
     '<div class="modal-foot"><button type="button" class="btn ghost" data-act="close-modal">Cancel</button>' +
     '<button class="btn" type="submit">Post job</button></div></form>');
@@ -627,7 +626,7 @@ function editJobModal(id) {
     '<label>Priority</label><select name="priority">' + ["Urgent", "High", "Normal", "Low"].map(function (p) {
       return '<option' + (j.priority === p ? " selected" : "") + ">" + p + "</option>";
     }).join("") + "</select>" +
-    '<label>Deadline</label><input name="deadline" type="datetime-local" value="' + dtLocal(j.deadline) + '">' +
+    '<label>Deadline</label><input name="deadline" type="datetime-local" value="' + (j.deadline ? dtLocal(j.deadline) : "") + '">' +
     '<div class="modal-foot"><button type="button" class="btn ghost" data-act="close-modal">Cancel</button>' +
     '<button class="btn" type="submit">Save job</button></div></form>', true);
 }
