@@ -610,7 +610,7 @@ function applyCheckin(job, note, doneIds) {
   toast("Checked in on " + job.id, "good");
 }
 
-function submitForReview(id) {
+function submitForReview(id, link, note) {
   var job = jobById(id);
   if (!job) return;
   if (!canEditJob(job)) { toast("Only the assignee or the Boss can submit this", "warn"); return; }
@@ -619,9 +619,17 @@ function submitForReview(id) {
     toast("Finish the checkpoints first — " + p.done + " of " + p.total + " done", "warn");
     return;
   }
+  var url = String(link || "").trim();
+  if (!url) { toast("Add the link to the work — GitHub, live URL, or other", "warn"); return; }
+  // Bare domains become clickable links; anything else stays a plain reference.
+  if (!/^https?:\/\//i.test(url) && url.indexOf(".") >= 0 && !/\s/.test(url)) url = "https://" + url;
   job.status = "Review";
+  job.submissionUrl = url;
+  job.submissionNote = String(note || "").trim();
+  job.submittedAt = now();
+  job.submittedBy = (currentUser() || {}).name || "Boss";
   delete job.blockedReason;
-  logActivity(job, "review", "Submitted for review");
+  logActivity(job, "review", "Submitted for review — " + url);
   jobSave(job);
   toast(job.id + " is in review", "good");
 }
@@ -643,6 +651,9 @@ function reviewJob(id, pass, note) {
     job.reviewNote = note;
     job.rework = (job.rework || 0) + 1;
     job.lastCheckinAt = now();
+    // The old submission is stale now — the bot submits fresh after rework.
+    job.submissionUrl = "";
+    job.submissionNote = "";
     logActivity(job, "review", "Sent back: " + note);
     jobSave(job);
     toast(job.id + " goes back to " + (job.assigneeName || "the builder"), "warn");
@@ -679,6 +690,8 @@ function reopenJob(id) {
   job.status = "Active";
   delete job.doneAt;
   job.lastCheckinAt = now();
+  job.submissionUrl = "";
+  job.submissionNote = "";
   logActivity(job, "review", "Reopened");
   jobSave(job);
 }

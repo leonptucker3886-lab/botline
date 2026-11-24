@@ -158,7 +158,7 @@ document.addEventListener("click", function (e) {
     case "checkin-open": checkinModal(id); break;
     case "block": blockModal(id); break;
     case "unblock": unblockJob(id); break;
-    case "submit-review": submitForReview(id); break;
+    case "submit-review": submitModal(id); break;
     case "review-pass": reviewJob(id, true, ""); break;
     case "review-fail": failModal(id); break;
     case "reopen": reopenJob(id); break;
@@ -419,6 +419,15 @@ document.addEventListener("submit", async function (e) {
     var fnote = String(fd.get("note") || "").trim();
     if (!fnote) { toast("Say what needs fixing", "warn"); return; }
     reviewJob(id, false, fnote);
+    closeModal();
+    return;
+  }
+
+  if (kind === "submit-review") {
+    var slink = String(fd.get("link") || "").trim();
+    var snote = String(fd.get("note") || "").trim();
+    if (!slink) { toast("Add the link to the work", "warn"); return; }
+    submitForReview(id, slink, snote);
     closeModal();
     return;
   }

@@ -409,6 +409,10 @@ function viewJob() {
     '<div class="headacts">' + acts + "</div></div>" +
     (j.status === "Blocked" && j.blockedReason ? '<div class="panel" style="border-color:color-mix(in srgb,var(--bad) 40%,transparent)"><b class="bad">Blocked — </b>' + esc(j.blockedReason) + "</div>" : "") +
     (j.reviewNote ? '<div class="panel"><b>Review note — </b>' + esc(j.reviewNote) + "</div>" : "") +
+    (j.submissionUrl ? '<div class="panel"><b>Submitted — </b>' +
+      (/^https?:\/\//i.test(j.submissionUrl) ? '<a href="' + esc(j.submissionUrl) + '" target="_blank" rel="noopener">' + esc(j.submissionUrl) + "</a>" : esc(j.submissionUrl)) +
+      (j.submissionNote ? "<p>" + esc(j.submissionNote) + "</p>" : "") +
+      ' <span class="stamp">' + esc(rel(j.submittedAt)) + " by " + esc(j.submittedBy || "") + "</span></div>" : "") +
     '<div class="detail-grid"><div class="col">' +
     '<section class="panel"><div class="panel-head"><h2>Checkpoints</h2><span class="muted small">' + p.done + " / " + p.total + "</span></div>" +
     '<div class="bar big"><i style="width:' + p.pct + '%"></i></div>' + cpHtml +
@@ -738,6 +742,15 @@ function blockModal(id) {
     '<label>What is in the way?</label><textarea name="reason" placeholder="Waiting on a decision only the Boss can make" required></textarea>' +
     '<div class="modal-foot"><button type="button" class="btn ghost" data-act="close-modal">Cancel</button>' +
     '<button class="btn danger solid" type="submit">Mark blocked</button></div></form>');
+}
+
+function submitModal(id) {
+  openModal("Submit " + id + " for review", '<form data-form="submit-review" data-id="' + esc(id) + '">' +
+    '<label>Link to the work</label><input name="link" type="text" inputmode="url" placeholder="github.com/owner/repo/pull/12 — or the live URL" required>' +
+    '<p class="field-note">GitHub reference, live URL, doc — whatever proves the work.</p>' +
+    '<label>Note (optional)</label><textarea name="note" placeholder="What changed, where to look, anything the reviewer should know"></textarea>' +
+    '<div class="modal-foot"><button type="button" class="btn ghost" data-act="close-modal">Cancel</button>' +
+    '<button class="btn" type="submit">Submit for review</button></div></form>');
 }
 
 function failModal(id) {
