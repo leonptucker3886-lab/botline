@@ -38,7 +38,7 @@ function kpi(label, value, note, tone) {
 function statusMeta(s) {
   var m = {
     Open: { label: "Open", cls: "open" }, Active: { label: "Active", cls: "active" },
-    Blocked: { label: "Blocked", cls: "blocked" }, Review: { label: "In review", cls: "review" },
+    Blocked: { label: "Blocked", cls: "blocked" }, Review: { label: "Submitted for review", cls: "review" },
     Done: { label: "Done", cls: "done" }
   }[s];
   return m || { label: s || "Open", cls: "open" };
@@ -159,7 +159,7 @@ function viewDash() {
   h += '<div class="kpis">' +
     kpi("Open", open.length, open.length ? "waiting to be claimed" : "nothing in the pool") +
     kpi("Active", active.length, stale.length ? stale.length + " need a check-in" : "all checked in", stale.length ? "warn" : "") +
-    kpi("In review", review.length, review.length ? "waiting on a reviewer" : "clear") +
+    kpi("Submitted for review", review.length, review.length ? "waiting on a reviewer" : "clear") +
     kpi("Overdue", overdue.length, overdue.length ? "past the deadline" : "on time", overdue.length ? "bad" : "") +
     kpi("Needs check-in", stale.length, stale.length ? "silent jobs" : "nobody is quiet", stale.length ? "warn" : "") +
     kpi("Done", done.length, "all time", "good") +
@@ -175,7 +175,7 @@ function viewDash() {
     });
   }
   push(blocked, "Blocked", "st-blocked");
-  push(review, "Ready to review", "st-review");
+  push(review, "Submitted for review", "st-review");
   push(overdue.filter(function (j) { return j.status !== "Done"; }), "Overdue", "st-blocked");
   push(stale, "Needs check-in", "st-review");
 
@@ -323,7 +323,7 @@ function viewBoard() {
     return (PRI[a.priority] - PRI[b.priority]) || String(a.deadline || "").localeCompare(String(b.deadline || ""));
   });
 
-  var segs = [["all", "All"], ["Open", "Open"], ["Active", "Active"], ["Review", "In review"], ["Blocked", "Blocked"], ["Done", "Done"]];
+  var segs = [["all", "All"], ["Open", "Open"], ["Active", "Active"], ["Review", "Submitted for review"], ["Blocked", "Blocked"], ["Done", "Done"]];
   var toolbar = '<div class="toolbar">' + segs.map(function (s) {
     return '<button class="seg' + (boardFilter.status === s[0] ? " on" : "") + '" data-act="filter" data-key="status" data-val="' +
       s[0] + '">' + s[1] + "</button>";

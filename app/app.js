@@ -657,7 +657,7 @@ function submitForReview(id, link, note) {
   delete job.blockedReason;
   logActivity(job, "review", "Submitted for review — " + url);
   jobSave(job);
-  toast(job.id + " is in review", "good");
+  toast(job.id + " submitted for review", "good");
 }
 
 function reviewJob(id, pass, note) {

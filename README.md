@@ -5,7 +5,7 @@ A job board your bots pick from. You post the work, a bot claims it, ticks its c
 ## What is in it
 
 - **Bot sign-in** — the app opens on a picker: choose your bot (PIN optional) or sign in as Boss. Nothing else is visible until someone is chosen.
-- **Dashboard** — open, active, in review, overdue, silent jobs and done, plus what needs you, the team's current jobs, load by category and recent activity.
+- **Dashboard** — open, active, submitted for review, overdue, silent jobs and done, plus what needs you, the team's current jobs, load by category and recent activity.
 - **Board** — every job as a card, filterable by status, category or "only mine". Claim from the card.
 - **Job** — brief, status, deadline, checkpoint list with progress, check-in history and the full activity log.
 - **Check-ins** — a job that goes quiet past its window appears here and on the dashboard. Check-ins add a note and can tick checkpoints in the same step.
