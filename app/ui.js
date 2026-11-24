@@ -118,11 +118,11 @@ function renderLogin() {
   grid.innerHTML = bots.length ? bots.map(botTile).join("") :
     '<div class="empty-login">No bots on the roster yet.<br><span>Sign in as Boss to add your team, project types and first job.</span></div>';
   var btn = document.getElementById("login-boss");
-  btn.textContent = fbConfigured() ? "Sign in as Boss with Google" : "Continue as Boss";
+  btn.textContent = "Continue as Boss";
   var note = document.getElementById("login-sync");
   if (!fbConfigured()) note.textContent = "Local mode — data stays in this browser";
-  else if (fb.error) note.textContent = "Firebase: " + fb.error;
-  else if (fb.ready) note.textContent = "Synced to Firebase" + (fb.user && !fb.user.isAnonymous ? " as " + (fb.user.email || "Boss") : "");
+  else if (GH.error) note.textContent = "Board: " + GH.error;
+  else if (GH.ready) note.textContent = "Board synced from GitHub";
   else note.textContent = "Connecting to Firebase…";
 }
 function botTile(b) {
@@ -680,8 +680,8 @@ function viewSettings() {
   }).join("") || '<p class="empty">No project types yet.</p>';
 
   var cloud = fbConfigured()
-    ? (fb.ready ? '<b class="ok">Connected</b> — ' + (fb.user && !fb.user.isAnonymous ? "Boss signed in with Google" : "anonymous bot session") :
-      '<b class="warn">Connecting…</b>' + (fb.error ? " — " + esc(fb.error) : ""))
+    ? (GH.ready && !GH.error ? '<b class="ok">Connected</b> — data/board.json in the botline GitHub repo' + (GH.lastSync ? ", synced " + esc(rel(GH.lastSync)) : "") :
+      '<b class="warn">Connecting…</b>' + (GH.error ? " — " + esc(GH.error) : ""))
     : '<b class="muted">Local mode</b> — everything stays in this browser';
 
   return pageHead("Settings", "Project types, checkpoints, branding and data.", "") +
@@ -695,12 +695,11 @@ function viewSettings() {
     '<div class="chiprow"><span class="swatch" style="background:' + esc(S.brand.accent) + '"></span>' +
     '<span class="swatch" style="background:' + esc(S.brand.accent2) + '"></span></div></div></section>' +
     '<section class="panel"><div class="panel-head"><div><h2>Shared cloud</h2>' +
-    '<p class="muted">Firebase keeps every bot on the same board. Without it the app is local to this browser.</p></div></div>' +
+    '<p class="muted">The board is saved in GitHub (data/board.json). Every save is a commit, so there is full history.</p></div></div>' +
     '<div class="setrow"><div class="tinfo"><b>Status</b><span>' + cloud + "</span></div>" +
     '<div class="row">' +
-    (fbConfigured() ? '<button class="btn ghost sm danger" data-act="disconnect-fb">Disconnect</button>' : "") +
-    '<button class="btn ghost sm" data-act="connect-fb">' + (fbConfigured() ? "Change config" : "Connect Firebase") + "</button></div></div>" +
-    '<p class="field-note">Rules live in firestore.rules. Bots sign in anonymously; the Boss signs in with Google.</p></section>' +
+    "</div></div>" +
+    '<p class="field-note">Bots read data/board.json from GitHub and write through /api/board.</p></section>' +
     '<section class="panel"><div class="panel-head"><div><h2>Data</h2>' +
     '<p class="muted">Export a backup any time. Import replaces the board with the file.</p></div></div>' +
     '<div class="row"><button class="btn ghost sm" data-act="export">Export backup</button>' +
