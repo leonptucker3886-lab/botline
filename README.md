@@ -1,57 +1,41 @@
 # Botline
 
-Run your bots like a team. You're the boss.
+A job board your bots pick from. You post the work, a bot claims it, ticks its checkpoints, checks in, and a reviewer closes it out.
 
-Botline is the board for a solo dev with AI bots. You submit the work. Cards get assigned. Bots log what they did. You review. The stalled ones get woken up.
+## What is in it
 
-## What it is
+- **Bot sign-in** — the app opens on a picker: choose your bot (PIN optional) or sign in as Boss. Nothing else is visible until someone is chosen.
+- **Dashboard** — open, active, in review, overdue, silent jobs and done, plus what needs you, the team's current jobs, load by category and recent activity.
+- **Board** — every job as a card, filterable by status, category or "only mine". Claim from the card.
+- **Job** — brief, status, deadline, checkpoint list with progress, check-in history and the full activity log.
+- **Check-ins** — a job that goes quiet past its window appears here and on the dashboard. Check-ins add a note and can tick checkpoints in the same step.
+- **Auto-assign** — match open jobs to free bots by category, fewest pickups first. Manual assign per job is beside it.
+- **Bots** — the roster: role, categories, PIN, availability, current job, last seen.
+- **Project types** — editable in Settings. Each type carries its deadline, check-in rhythm and checkpoint template. New jobs copy the template; each job can still edit its own checkpoints.
+- **Review** — submit for review only when every checkpoint is ticked. Pass closes the job; send back returns it with a note and counts the rework.
+- **Shared cloud (Firebase)** — one board for every bot. Optional: without a config everything stays in the browser.
+- **Branding** — name, tagline and accents re-skin the app.
 
-- **Submit** — type, title, requirements, deadline, priority. Prewritten checklists per job type (Blog, Top 5, Game, Software).
-- **Board** — every job is a card, posted like a blog. Highest priority first.
-- **Card** — type, date, who's responsible, status, requirements, checkpoints, message board, inspection review, Escalate ("What's happening?").
-- **Bots** — the roster. Status, current card, last seen. Wake, pause, remove.
-- **Inbox** — escalations, bot questions, review notes. One place, not five chats.
-- **Dashboard** — open, blocked, overdue, stalled, done. What needs you, right now.
-- **Auto-checks** — 15 checks listed on every card (file exists, live URL 200, links work, right folder, no secrets, alt text, attribution…). The runner that executes them is the next build.
-- **White-label** — your name, colors, and tagline in one panel. The whole app re-skins. Ship it under your own domain and it's yours.
-
-## Time limits (the deal)
-
-- Blog — 1 day max
-- Top 5 — 1 day max
-- Game — 3 days, in checkpoints
-- Software/app — 7 days, in checkpoints
-- Urgent cuts to hours. Low stretches a bit.
+There is no demo data. A fresh board starts empty with four default project types (Blog, Top 5, Game, Software) you can edit or delete.
 
 ## Run it
 
-Static site. No server, no build step.
+Static site. No build step.
 
-- `index.html` — the landing page.
+- `index.html` — landing page.
 - `app/index.html` — the app. Open it and go.
-- Data lives in the browser (localStorage). Export it as JSON any time from the Dashboard. No lock-in.
+- `app/app.js` — state, storage, Firebase, identity, job mutations.
+- `app/ui.js` — views and modal contents.
+- `app/boot.js` — events, forms, boot.
+- `app/app.css` — styles.
+- `app/firebase-config.js` — the shared Firebase web config, when you have one.
 
-## White-label it
+## Firebase
 
-Open the app → White-label. Set your product name, tagline, and colors. That's the whole rebrand — every screen picks it up. Point your own domain at the deploy and sell it as yours.
+Optional but recommended for a real team. Put the project's public web config in `app/firebase-config.js` and every browser connects on load; otherwise paste it per browser in Settings → Shared cloud. Steps are in `FIREBASE_SETUP.md`; rules are in `firestore.rules`.
 
 ## Deploy
 
-Push this repo to Vercel (or any static host). Root serves the landing page; `/app/` serves the app.
-
-## SOPs — the gate before the Inspector
-
-Every job type has a Standard Operating Procedure in `sops/`. The bot follows it, the system runs its checks, and only a card that passes every check reaches the Inspector. Fail goes back to the builder with the exact failed check.
-
-- `sops/blog.md` — Blog post, 1 day max.
-- `sops/top-5.md` — Top 5 (Starting Lineup), 1 day max.
-- `sops/game.md` — Game, 3 days in checkpoints.
-- `sops/software.md` — Software / app, 7 days in checkpoints.
-
-## Status
-
-v1, November 19, 2026. Built from the inside tool that runs LeonLink's bot team. Demo data ships with it — reset it from the Dashboard.
-
-Next: a shared store every bot sees, auto-assign on submit, the auto-checker actually running on upload, and Escalate reaching the builder's inbox for real.
+Push the repo to Vercel or any static host. `/` serves the landing page, `/app/` serves the app.
 
 © 2026 LeonLink

@@ -1,29 +1,39 @@
-# Botline + Firebase — setup
+# Botline + Firebase
 
-The shared store every bot sees. Bots sign in anonymously — no email, no password, one login each. Free tier covers it.
+Firebase is the shared store, so every bot in every browser sees the same board. Without it Botline runs local to one browser. The app starts empty either way — no demo jobs, no sample bots.
 
-## 1. Create the project (Leon — 5 minutes, in your Google account)
+## 1. Create the project (5 minutes)
 
-1. Go to https://console.firebase.google.com → **Add project** → name it `botline` (or your product name) → continue (analytics off is fine).
-2. **Build → Authentication → Get started → Sign-in method → Anonymous → Enable → Save.**
-3. **Build → Firestore Database → Create database → Start in production mode → pick a region → Enable.**
-4. **Firestore → Rules tab** → replace the rules with `firestore.rules` from this repo → **Publish**. (Or: `firebase deploy --only firestore:rules` from the repo.)
-5. **Project settings (gear) → Your apps → Web app `</>`** → register the app (any nickname) → copy the `firebaseConfig` object.
+1. https://console.firebase.google.com → **Add project** → name it `botline` → continue (analytics off is fine).
+2. **Build → Authentication → Get started → Sign-in method**
+   - **Anonymous** → Enable → Save. Bots sign in with this.
+   - **Google** → Enable → Save. The Boss signs in with this.
+3. **Build → Firestore Database → Create database** → production mode → pick a region → Enable.
+4. **Firestore → Rules** → paste `firestore.rules` from this repo → **Publish**.
+5. **Project settings → Your apps → Web app `</>`** → register the app → copy the `firebaseConfig` object.
 
 ## 2. Connect the app
 
-1. Open the app → **White-label → Sync — Firebase** → paste the whole config JSON → **Save & connect**. The page reloads and signs in anonymously.
-2. Status should read `Synced — signed in as …`. The demo cards/bots push up to Firestore on first connect.
-3. Every bot opens the same app URL, picks its name under **Dashboard → Working as**, and claims cards from the pool.
+Pick one:
 
-## 3. The pool
+**Every browser at once (recommended).** Paste the `firebaseConfig` object into `app/firebase-config.js` and redeploy. That file is the public web config, not a secret, so it is safe to commit — every bot that opens the app connects by itself.
 
-- **Open cards are the pool.** A bot claims one (card page → **Claim this card**) or hits **Auto-assign me a card** (Bots tab) — the best Open card for its role: Writers get Blog/Top 5, Builders get Game/Software, Workers take anything, Inspectors review and don't take cards.
-- A claim is a transaction: only one bot gets the card. If it's already taken, the bot picks another.
-- Roles are just roster entries — add as many bots and inspectors as you need, or as few. Gadget is a Worker now: she takes cards from the pool like anyone else.
-- The Boss (Leon/Stonewall) can do everything, including delete.
+**One browser at a time.** Open `/app/`, sign in as Boss (or use **Continue as Boss** if Firebase is not connected yet), then **Settings → Shared cloud → Connect Firebase** → paste the whole `firebaseConfig` JSON → **Save & connect**.
 
-## 4. Seeding cards
+Either way the page reloads, signs in, and the status reads **Connected**. A browser that connected on the previous version of the app keeps its config: it is picked up and carried over on first load.
 
-- New cards come from **Submit** in the app.
-- To load an existing board: **Dashboard → Export all data (JSON)** on the old board, then **Import data** here with Firebase on — the import pushes everything up.
+Every bot opens the same URL, picks itself on the sign-in screen, and the board is shared.
+
+## 3. How the team works
+
+- **Boss** signs in with Google and does everything: project types, bots, jobs, reviews, deletes, data.
+- **Bots** pick their name on the sign-in screen. A bot with a PIN needs it first (a soft gate, not real security).
+- A bot claims an open job in its categories, ticks checkpoints, and **checks in** with a note. A job that goes quiet past its check-in window shows up under **Check-ins** and on the dashboard.
+- A bot holds one job at a time. **Submit for review** unlocks once every checkpoint is ticked. A reviewer (role containing review / QA / check) or the Boss passes it or sends it back with a note.
+- **Auto-assign** matches open jobs to the free bot whose category fits, fewest pickups first.
+
+## 4. Data
+
+- **Settings → Data → Export backup** any time; **Import** replaces the board with a file.
+- **Reset everything** erases jobs, bots and check-ins in the browser and in the cloud, then restores the default project types.
+- Deletes are real: the job document is removed from Firestore, and the live listener accepts an empty board.

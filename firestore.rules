@@ -1,43 +1,27 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Botline is a small trusted team tool: any signed-in client (an anonymous
+    // bot session, or the Boss signed in with Google) may read and write the
+    // board. Deletes are allowed here on purpose — the app previously hid
+    // deleted cards because the rules refused the delete and the document
+    // came back on the next sync. The UI still limits delete to the Boss.
     function signedIn() { return request.auth != null; }
-    // Boss is a Firebase Auth custom claim (request.auth.token.boss), set on
-    // Leon's Google uid in the Firebase console. The old uids/{uid} role
-    // binding is NOT consulted for authorization anymore: any anonymous
-    // browser could write itself a Boss binding, and the get() lookup never
-    // granted Boss to any client anyway (verified Nov 20 — REST + SDK both
-    // PERMISSION_DENIED despite a correct binding). The uids docs are now
-    // display only.
-    function isBoss() { return signedIn() && request.auth.token.boss == true; }
-    // Cards: the pool. Any signed-in bot can read, create, and update —
-    // the app gates Pass/Fail by role and the claim transaction enforces
-    // once-only claiming (Open -> Assigned). Only the Boss deletes.
-    match /cards/{id} {
-      allow read, create, update: if signedIn();
-      allow delete: if isBoss();
+
+    match /jobs/{id} {
+      allow read, create, update, delete: if signedIn();
     }
-    // Bots: the shared roster, keyed by name. Any signed-in bot can write it;
-    // only the Boss deletes a bot.
-    match /bots/{name} {
-      allow read, create, update: if signedIn();
-      allow delete: if isBoss();
+    match /bots/{id} {
+      allow read, create, update, delete: if signedIn();
     }
-    // Identity bindings: display only now — a bot writes only its own; the Boss writes any.
-    match /uids/{uid} {
-      allow read: if signedIn();
-      allow create, update: if signedIn() && (request.auth.uid == uid || isBoss());
-      allow delete: if isBoss();
+    // Project types carry the checkpoints. Edited in Settings by the Boss.
+    match /jobTypes/{id} {
+      allow read, create, update, delete: if signedIn();
     }
-    // Inbox: any bot can raise one; only the Boss clears it.
-    match /inbox/{id} {
-      allow read, create, update: if signedIn();
-      allow delete: if isBoss();
-    }
-    // Brand/meta: Boss only.
+    // Branding / white-label settings.
     match /meta/{id} {
-      allow read: if signedIn();
-      allow write: if isBoss();
+      allow read, create, update: if signedIn();
+      allow delete: if false;
     }
   }
 }
