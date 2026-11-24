@@ -113,17 +113,11 @@ function renderLogin() {
   grid.innerHTML = bots.length ? bots.map(botTile).join("") :
     '<div class="empty-login">No bots on the roster yet.<br><span>Sign in as Boss to add your team, project types and first job.</span></div>';
   var btn = document.getElementById("login-boss");
-  var bossUser = !!(fb.user && !fb.user.isAnonymous);
-  btn.textContent = !fbConfigured() ? "Continue as Boss" : bossUser ? "Continue as Boss" : "Sign in as Boss with Google";
+  btn.textContent = fbConfigured() ? "Sign in as Boss with Google" : "Continue as Boss";
   var note = document.getElementById("login-sync");
   if (!fbConfigured()) note.textContent = "Local mode — data stays in this browser";
-  else if (fb.error) {
-    note.textContent = "Firebase: " + fb.error +
-      (/unauthorized-domain|not authorized|operation-not-allowed|api-key|configuration/i.test(fb.error)
-        ? " — in Firebase open Authentication → Settings → Authorized domains and add this site, and enable the Google provider."
-        : "");
-  }
-  else if (fb.ready) note.textContent = "Synced to Firebase" + (bossUser ? " as " + (fb.user.email || "Boss") : "");
+  else if (fb.error) note.textContent = "Firebase: " + fb.error;
+  else if (fb.ready) note.textContent = "Synced to Firebase" + (fb.user && !fb.user.isAnonymous ? " as " + (fb.user.email || "Boss") : "");
   else note.textContent = "Connecting to Firebase…";
 }
 function botTile(b) {
