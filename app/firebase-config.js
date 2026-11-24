@@ -1,20 +1,17 @@
 /* Botline — shared Firebase project.
  *
- * Paste the `firebaseConfig` object from
- * Firebase console → Project settings → Your apps → Web app into the line below.
  * This is the public web config, not a secret: it is safe to commit and it makes
  * every browser connect to the same board without anyone pasting anything.
  *
- * Example:
- *   window.BOTLINE_FIREBASE = {
- *     apiKey: "AIza…",
- *     authDomain: "your-project.firebaseapp.com",
- *     projectId: "your-project",
- *     storageBucket: "your-project.appspot.com",
- *     messagingSenderId: "123456789",
- *     appId: "1:123456789:web:abc123"
- *   };
- *
- * Leave it null to connect per browser from Settings → Shared cloud.
+ * Firebase project: botline-61f19 (Spark, Analytics off).
+ * Auth: Anonymous (bots) + Google (Boss). Firestore: jobs, bots, jobTypes, meta.
  */
-window.BOTLINE_FIREBASE = null;
+
+window.BOTLINE_FIREBASE = {
+  apiKey: "AIzaSyBJCekEZp-o2DyoGKszo9tRW9_v2MquLSk",
+  authDomain: "botline-61f19.firebaseapp.com",
+  projectId: "botline-61f19",
+  storageBucket: "botline-61f19.firebasestorage.app",
+  messagingSenderId: "747938706598",
+  appId: "1:747938706598:web:d879ea8839ff54f8277067"
+};
