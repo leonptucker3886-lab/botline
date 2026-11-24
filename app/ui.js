@@ -38,8 +38,9 @@ function kpi(label, value, note, tone) {
 function statusMeta(s) {
   var m = {
     Open: { label: "Open", cls: "open" }, Active: { label: "Active", cls: "active" },
-    Blocked: { label: "Blocked", cls: "blocked" }, Review: { label: "Submitted for review", cls: "review" },
-    Done: { label: "Done", cls: "done" }
+    Blocked: { label: "Blocked", cls: "blocked" }, Review: { label: "In review", cls: "review" },
+    Approved: { label: "Approved", cls: "done" }, Live: { label: "Live", cls: "done" },
+    Rejected: { label: "Rejected", cls: "blocked" }, Done: { label: "Done", cls: "done" }
   }[s];
   return m || { label: s || "Open", cls: "open" };
 }
@@ -79,11 +80,13 @@ function render() {
   shell.hidden = false;
   renderChrome(u);
   if (route === "settings" && !isBoss()) route = "dash";
+  if (route === "inspect" && !canReview()) route = "dash";
   if (route === "job" && !jobById(currentJobId)) route = "board";
   document.getElementById("view").innerHTML = renderView();
 }
 function renderView() {
   if (route === "job") return viewJob();
+  if (route === "inspect") return viewInspect();
   if (route === "board") return viewBoard();
   if (route === "assign") return viewAssign();
   if (route === "checkins") return viewCheckins();
@@ -97,6 +100,8 @@ function renderChrome(u) {
     b.classList.toggle("on", on);
   });
   document.getElementById("nav-settings").hidden = !isBoss();
+  var navInspect = document.getElementById("nav-inspect");
+  if (navInspect) navInspect.hidden = !canReview();
   var mc = document.getElementById("me-card");
   mc.innerHTML = '<span class="av' + (u.kind === "boss" ? " boss" : "") + '">' +
     esc(u.kind === "boss" ? "B" : initials(u.name)) + "</span><div><b>" + esc(u.name) + "</b><span>" +
@@ -104,6 +109,10 @@ function renderChrome(u) {
   var need = S.jobs.filter(needsCheckin).length;
   var badge = document.querySelector('[data-badge="checkins"]');
   if (badge) { badge.hidden = !need; badge.textContent = need; }
+  // The inspector's queue is the alert: no chatter, just a count on the tab.
+  var queue = S.jobs.filter(function (j) { return j.status === "Review"; }).length;
+  var ibadge = document.querySelector('[data-badge="inspect"]');
+  if (ibadge) { ibadge.hidden = !queue; ibadge.textContent = queue; }
 }
 function renderLogin() {
   document.getElementById("login-brand").innerHTML = wordmark();
@@ -142,8 +151,11 @@ function viewDash() {
   var review = jobs.filter(function (j) { return j.status === "Review"; });
   var blocked = jobs.filter(function (j) { return j.status === "Blocked"; });
   var done = jobs.filter(function (j) { return j.status === "Done"; });
+  var approved = jobs.filter(function (j) { return j.status === "Approved"; });
+  var live = jobs.filter(function (j) { return j.status === "Live" || j.status === "Done"; });
   var overdue = jobs.filter(function (j) {
-    return j.status !== "Done" && j.deadline && new Date(j.deadline).getTime() < Date.now();
+    if (["Done", "Approved", "Live", "Rejected", "Review"].indexOf(j.status) >= 0) return false;
+    return j.deadline && new Date(j.deadline).getTime() < Date.now();
   });
   var stale = active.filter(needsCheckin);
   var mine = currentBot() ? activeJobOf(currentBot().id) : null;
@@ -159,10 +171,11 @@ function viewDash() {
   h += '<div class="kpis">' +
     kpi("Open", open.length, open.length ? "waiting to be claimed" : "nothing in the pool") +
     kpi("Active", active.length, stale.length ? stale.length + " need a check-in" : "all checked in", stale.length ? "warn" : "") +
-    kpi("Submitted for review", review.length, review.length ? "waiting on a reviewer" : "clear") +
+    kpi("In review", review.length, review.length ? "waiting on an inspector" : "clear") +
+    kpi("Approved", approved.length, approved.length ? "ready to go live" : "none waiting", approved.length ? "warn" : "") +
     kpi("Overdue", overdue.length, overdue.length ? "past the deadline" : "on time", overdue.length ? "bad" : "") +
     kpi("Needs check-in", stale.length, stale.length ? "silent jobs" : "nobody is quiet", stale.length ? "warn" : "") +
-    kpi("Done", done.length, "all time", "good") +
+    kpi("Live", live.length, "all time", "good") +
     "</div>";
 
   var seen = {};
@@ -174,9 +187,10 @@ function viewDash() {
       items.push({ j: j, label: label, cls: cls });
     });
   }
+  push(review, "In review", "st-review");
+  push(approved, "Approved — go live", "st-done");
   push(blocked, "Blocked", "st-blocked");
-  push(review, "Submitted for review", "st-review");
-  push(overdue.filter(function (j) { return j.status !== "Done"; }), "Overdue", "st-blocked");
+  push(overdue, "Overdue", "st-blocked");
   push(stale, "Needs check-in", "st-review");
 
   var attn = items.length ? items.slice(0, 6).map(function (x) {
@@ -218,6 +232,9 @@ function myJobPanel(job) {
     " checkpoints · last check-in " + esc(rel(job.lastCheckinAt)) + '</span><span class="' + dueInfo(job).cls + ' small">' +
     esc(dueInfo(job).text) + "</span></div>" +
     (next ? '<p class="muted" style="margin-top:10px">Next up: <strong>' + esc(next.label) + "</strong></p>" : "") +
+    (job.status === "Review" ? '<p class="muted small" style="margin-top:10px"><b>In review</b> — submitted ' +
+      esc(rel(job.submittedAt)) + " by " + esc(job.submittedBy || "you") + (roundCount(job) ? " · round " + esc(roundCount(job)) : "") + "</p>" : "") +
+    (job.status === "Approved" ? '<p class="muted small" style="margin-top:10px"><b class="ok">Approved</b> — the inspector is putting it live</p>' : "") +
     '<div class="row" style="margin-top:12px"><button class="btn" data-act="checkin-open" data-id="' + esc(job.id) + '">Check in</button></div>' +
     "</section>";
 }
@@ -306,6 +323,7 @@ function jobCard(j) {
     '<div class="bar"><i style="width:' + p.pct + '%"></i></div>' +
     '<div class="jcard-meta"><span><i class="dot ' + (j.assignee ? "on" : "") + '"></i>' +
     esc(j.assigneeName || "Unassigned") + "</span><span>" + p.done + "/" + p.total +
+    (roundCount(j) ? " · round " + roundCount(j) : "") +
     ' · <span class="' + due.cls + '">' + esc(due.text) + "</span></span></div>" +
     '<div class="jcard-acts">' + acts + "</div></article>";
 }
@@ -316,14 +334,15 @@ function viewBoard() {
   if (boardFilter.type !== "all") list = list.filter(function (j) { return j.type === boardFilter.type; });
   var me = currentBot();
   if (boardFilter.mine && me) list = list.filter(function (j) { return j.assignee === me.id; });
-  var order = { Open: 0, Active: 1, Review: 2, Blocked: 3, Done: 4 };
+  var order = { Open: 0, Active: 1, Review: 2, Blocked: 3, Approved: 4, Live: 5, Rejected: 6, Done: 7 };
   list.sort(function (a, b) {
     var s = (order[a.status] || 0) - (order[b.status] || 0);
     if (s) return s;
     return (PRI[a.priority] - PRI[b.priority]) || String(a.deadline || "").localeCompare(String(b.deadline || ""));
   });
 
-  var segs = [["all", "All"], ["Open", "Open"], ["Active", "Active"], ["Review", "Submitted for review"], ["Blocked", "Blocked"], ["Done", "Done"]];
+  var segs = [["all", "All"], ["Open", "Open"], ["Active", "Active"], ["Review", "In review"],
+    ["Blocked", "Blocked"], ["Approved", "Approved"], ["Live", "Live"], ["Rejected", "Rejected"]];
   var toolbar = '<div class="toolbar">' + segs.map(function (s) {
     return '<button class="seg' + (boardFilter.status === s[0] ? " on" : "") + '" data-act="filter" data-key="status" data-val="' +
       s[0] + '">' + s[1] + "</button>";
@@ -342,6 +361,91 @@ function viewBoard() {
 
   return pageHead("Board", "Every job in one place. Claim one and check in as you go.",
     isBoss() ? '<button class="btn" data-act="new-job">New job</button>' : "") + toolbar + body;
+}
+
+/* ---------------- inspector ---------------- */
+
+function verdictLabel(v) {
+  if (v === "approved") return "Approved";
+  if (v === "changes") return "Changes needed";
+  if (v === "rejected") return "Rejected";
+  return "Waiting on a verdict";
+}
+function linkHtml(url) {
+  if (!url) return "";
+  return /^https?:\/\//i.test(url) ? '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(url) + "</a>" : esc(url);
+}
+
+function roundsPanel(j) {
+  var rounds = j.rounds || [];
+  if (!rounds.length) return "";
+  var rows = rounds.slice().reverse().map(function (r) {
+    var tone = r.verdict === "approved" ? "ok" : r.verdict === "rejected" ? "bad" : r.verdict === "changes" ? "warn" : "muted";
+    return '<div class="checkin"><b>Round ' + esc(r.n) + '</b> <span class="stamp">' + esc(rel(r.at)) + " by " + esc(r.by || "") + "</span>" +
+      "<p>" + (r.url ? linkHtml(r.url) : "no link") + (r.note ? " — " + esc(r.note) : "") + "</p>" +
+      '<p class="small ' + tone + '"><b>' + esc(verdictLabel(r.verdict)) + "</b>" +
+      (r.verdictAt ? " " + esc(rel(r.verdictAt)) + " by " + esc(r.verdictBy || "") : "") +
+      (r.verdictNote ? " — " + esc(r.verdictNote) : "") + "</p>" +
+      (r.reportUrl ? '<p class="small">Report: ' + linkHtml(r.reportUrl) + "</p>" : "") + "</div>";
+  }).join("");
+  return '<section class="panel"><div class="panel-head"><h2>Submission rounds</h2><span class="muted small">' +
+    rounds.length + " so far</span></div>" + rows + "</section>";
+}
+
+function historyPanel(j) {
+  var h = statusHistory(j);
+  if (!h.length) return "";
+  var rows = h.slice().reverse().map(function (e) {
+    return '<div class="row" style="justify-content:space-between;gap:12px;padding:6px 0"><span><b>' + esc(e.label) +
+      '</b> <span class="muted small">by ' + esc(e.by || "") + '</span></span><span class="stamp">' + esc(rel(e.at)) + "</span></div>";
+  }).join("");
+  return '<section class="panel"><div class="panel-head"><h2>Status history</h2></div>' + rows + "</section>";
+}
+
+function viewInspect() {
+  var queue = S.jobs.filter(function (j) { return j.status === "Review"; }).sort(function (a, b) {
+    return String(a.submittedAt || "").localeCompare(String(b.submittedAt || ""));
+  });
+  var approved = S.jobs.filter(function (j) { return j.status === "Approved"; });
+  var recent = [];
+  S.jobs.forEach(function (j) {
+    (j.rounds || []).forEach(function (r) { if (r.verdict) recent.push({ j: j, r: r }); });
+  });
+  recent.sort(function (a, b) { return String(b.r.verdictAt || "").localeCompare(String(a.r.verdictAt || "")); });
+
+  var rows = queue.length ? queue.map(function (j) {
+    var r = lastRound(j) || {};
+    return '<div class="trow">' + avatar(j.submittedBy || j.assigneeName || "?") +
+      '<div class="tinfo"><b>' + esc(j.id) + " · " + esc(j.title) + "</b><span>" +
+      esc(j.submittedBy || j.assigneeName || "someone") + (roundCount(j) ? " · round " + esc(roundCount(j)) : "") + " · submitted " +
+      esc(rel(j.submittedAt)) + (r.url ? " · " + linkHtml(r.url) : "") + " · " + esc(dueInfo(j).text) + "</span></div>" +
+      '<div class="row">' +
+      '<button class="btn ghost sm" data-act="open-job" data-id="' + esc(j.id) + '">Open</button>' +
+      '<button class="btn sm" data-act="verdict" data-kind="approved" data-id="' + esc(j.id) + '">Approve</button>' +
+      '<button class="btn ghost sm" data-act="verdict" data-kind="changes" data-id="' + esc(j.id) + '">Changes</button>' +
+      '<button class="btn danger sm" data-act="verdict" data-kind="rejected" data-id="' + esc(j.id) + '">Reject</button>' +
+      "</div></div>";
+  }).join("") : '<p class="empty">Nothing is waiting on you. Submissions land here the moment a writer sends one.</p>';
+
+  var liveRows = approved.length ? approved.map(function (j) {
+    return '<div class="trow">' + avatar(j.assigneeName || "?") + '<div class="tinfo"><b>' + esc(j.id) + " · " + esc(j.title) +
+      "</b><span>approved " + esc(rel(j.approvedAt)) + " by " + esc(j.approvedBy || "") + "</span></div>" +
+      '<button class="btn sm" data-act="mark-live" data-id="' + esc(j.id) + '">Mark live</button></div>';
+  }).join("") : '<p class="empty">Nothing approved is waiting to go live.</p>';
+
+  var recentRows = recent.length ? recent.slice(0, 10).map(function (x) {
+    var dot = x.r.verdict === "approved" ? "done" : x.r.verdict === "rejected" ? "reject" : "review";
+    return '<div class="act"><span class="act-dot ' + dot + '"></span><div><b>' + esc(x.j.id) + " · round " + esc(x.r.n) +
+      '</b> <span class="muted">' + esc(verdictLabel(x.r.verdict)) + "</span><p>" + esc(x.r.verdictNote || "—") +
+      '</p><span class="stamp">' + esc(rel(x.r.verdictAt)) + " by " + esc(x.r.verdictBy || "") + "</span></div></div>";
+  }).join("") : '<p class="empty">No verdicts given yet.</p>';
+
+  return pageHead("Inspector", "Every submission waiting on a verdict, and the ones approved but not yet live.", "") +
+    '<section class="panel"><div class="panel-head"><h2>Review queue</h2><span class="pill ' + (queue.length ? "st-review" : "") + '">' +
+    queue.length + "</span></div>" + rows + "</section>" +
+    '<section class="panel"><div class="panel-head"><h2>Approved — ready to go live</h2><span class="pill ' + (approved.length ? "st-done" : "") + '">' +
+    approved.length + "</span></div>" + liveRows + "</section>" +
+    '<section class="panel"><div class="panel-head"><h2>Recent verdicts</h2></div>' + recentRows + "</section>";
 }
 
 /* ---------------- job detail ---------------- */
@@ -369,21 +473,32 @@ function viewJob() {
     acts += '<button class="btn ghost" data-act="submit-review" data-id="' + esc(j.id) + '">Submit for review</button>';
   }
   if (j.status === "Review" && canReview()) {
-    acts += '<button class="btn" data-act="review-pass" data-id="' + esc(j.id) + '">Pass</button>' +
-      '<button class="btn danger solid" data-act="review-fail" data-id="' + esc(j.id) + '">Send back</button>';
+    acts += '<button class="btn" data-act="verdict" data-kind="approved" data-id="' + esc(j.id) + '">Approve</button>' +
+      '<button class="btn ghost" data-act="verdict" data-kind="changes" data-id="' + esc(j.id) + '">Changes needed</button>' +
+      '<button class="btn danger solid" data-act="verdict" data-kind="rejected" data-id="' + esc(j.id) + '">Reject</button>';
   }
-  if (j.status === "Done" && isBoss()) acts += '<button class="btn ghost" data-act="reopen" data-id="' + esc(j.id) + '">Reopen</button>';
+  if (j.status === "Approved" && canReview()) {
+    acts += '<button class="btn" data-act="mark-live" data-id="' + esc(j.id) + '">Mark live on leonlink.net</button>';
+  }
+  if (["Approved", "Live", "Rejected", "Done"].indexOf(j.status) >= 0 && isBoss()) {
+    acts += '<button class="btn ghost" data-act="reopen" data-id="' + esc(j.id) + '">Reopen</button>';
+  }
   if (isBoss()) acts += '<button class="btn ghost sm" data-act="edit-job" data-id="' + esc(j.id) + '">Edit</button>' +
     '<button class="btn danger sm" data-act="delete-job" data-id="' + esc(j.id) + '">Delete</button>';
   if ((j.status === "Active" || j.status === "Blocked") && isBoss()) {
     acts += '<button class="btn ghost sm" data-act="release" data-id="' + esc(j.id) + '">Release</button>';
   }
 
-  var cpHtml = cps.length ? '<div class="cplist">' + cps.map(function (cp) {
-    return '<label class="cp' + (cp.done ? " done" : "") + '"><input type="checkbox" data-cp="' + esc(cp.id) +
+  var cpHtml = cps.length ?     '<div class="cplist">' + cps.map(function (cp) {
+    var needLinks = needsLinkCount(cp);
+    return '<div class="cp' + (cp.done ? " done" : "") + '">' +
+      '<label class="cpmain"><input type="checkbox" data-cp="' + esc(cp.id) +
       '" data-job="' + esc(j.id) + '"' + (cp.done ? " checked" : "") + (editable ? "" : " disabled") + ">" +
-      '<span class="cp-label">' + esc(cp.label) + "</span>" +
-      '<span class="cp-who">' + (cp.done ? esc(cp.by || "") + " · " + esc(rel(cp.at)) : "") + "</span></label>";
+      '<span class="cp-label">' + esc(cp.label) + "</span></label>" +
+      (needLinks ? '<input type="number" min="1" step="1" data-links="' + esc(cp.id) + '" data-job="' + esc(j.id) +
+        '" value="' + esc(cp.links || "") + '" placeholder="links" aria-label="Links opened for ' + esc(cp.label) +
+        '" style="width:78px;margin-left:auto"' + (editable ? "" : " disabled") + ">" : "") +
+      '<span class="cp-who">' + (cp.done ? esc(cp.by || "") + " · " + esc(rel(cp.at)) + (cp.links ? " · " + esc(cp.links) + " links" : "") : "") + "</span></div>";
   }).join("") + "</div>" : '<p class="empty">No checkpoints on this job yet.</p>';
 
   var checkins = (j.checkins && j.checkins.length) ? j.checkins.map(function (c) {
@@ -409,10 +524,12 @@ function viewJob() {
     '<div class="headacts">' + acts + "</div></div>" +
     (j.status === "Blocked" && j.blockedReason ? '<div class="panel" style="border-color:color-mix(in srgb,var(--bad) 40%,transparent)"><b class="bad">Blocked — </b>' + esc(j.blockedReason) + "</div>" : "") +
     (j.reviewNote ? '<div class="panel"><b>Review note — </b>' + esc(j.reviewNote) + "</div>" : "") +
-    (j.submissionUrl ? '<div class="panel"><b>Submitted — </b>' +
-      (/^https?:\/\//i.test(j.submissionUrl) ? '<a href="' + esc(j.submissionUrl) + '" target="_blank" rel="noopener">' + esc(j.submissionUrl) + "</a>" : esc(j.submissionUrl)) +
+    (j.status === "Review" ? '<div class="panel"><b>In review</b> — submitted ' + esc(rel(j.submittedAt)) + " by " +
+      esc(j.submittedBy || "") + (roundCount(j) ? " · round " + esc(roundCount(j)) : "") + " · " + esc(dueInfo(j).text) + "</div>" : "") +
+    (j.submissionUrl ? '<div class="panel"><b>Submitted — </b>' + linkHtml(j.submissionUrl) +
       (j.submissionNote ? "<p>" + esc(j.submissionNote) + "</p>" : "") +
       ' <span class="stamp">' + esc(rel(j.submittedAt)) + " by " + esc(j.submittedBy || "") + "</span></div>" : "") +
+    roundsPanel(j) + historyPanel(j) +
     '<div class="detail-grid"><div class="col">' +
     '<section class="panel"><div class="panel-head"><h2>Checkpoints</h2><span class="muted small">' + p.done + " / " + p.total + "</span></div>" +
     '<div class="bar big"><i style="width:' + p.pct + '%"></i></div>' + cpHtml +
@@ -640,8 +757,10 @@ function checkinModal(id) {
   if (!j) return;
   var cps = j.checkpoints || [];
   var list = cps.length ? '<div class="catgrid" style="flex-direction:column;align-items:stretch">' + cps.map(function (cp) {
-    return '<label class="catcheck' + (cp.done ? " on" : "") + '"><input type="checkbox" name="cps" value="' + esc(cp.id) + '"' +
-      (cp.done ? " checked disabled" : "") + "> " + esc(cp.label) + "</label>";
+    return '<div class="catcheck' + (cp.done ? " on" : "") + '"><label><input type="checkbox" name="cps" value="' + esc(cp.id) + '"' +
+      (cp.done ? " checked disabled" : "") + "> " + esc(cp.label) + "</label>" +
+      (needsLinkCount(cp) && !cp.done ? '<input type="number" name="links_' + esc(cp.id) +
+        '" min="1" step="1" placeholder="links opened" style="width:130px" aria-label="Links opened for ' + esc(cp.label) + '">' : "") + "</div>";
   }).join("") + "</div>" : '<p class="empty">This job has no checkpoints.</p>';
   openModal("Check in — " + j.id, '<form data-form="checkin" data-id="' + esc(j.id) + '">' +
     '<label>What moved since last time?</label><textarea name="note" placeholder="Shipped the draft, fixed the loader, blocked on copy…" required></textarea>' +
@@ -753,11 +872,24 @@ function submitModal(id) {
     '<button class="btn" type="submit">Submit for review</button></div></form>');
 }
 
-function failModal(id) {
-  openModal("Send " + id + " back", '<form data-form="fail" data-id="' + esc(id) + '">' +
-    '<label>What needs fixing?</label><textarea name="note" placeholder="The mobile layout breaks at the checkout step" required></textarea>' +
+function verdictModal(id, preset) {
+  var j = jobById(id);
+  if (!j) return;
+  var r = lastRound(j) || {};
+  var pick = String(preset || "approved");
+  var opts = [["approved", "Approved"], ["changes", "Changes needed"], ["rejected", "Rejected"]].map(function (o) {
+    return '<label class="catcheck' + (pick === o[0] ? " on" : "") + '"><input type="radio" name="verdict" value="' + o[0] + '"' +
+      (pick === o[0] ? " checked" : "") + "> " + o[1] + "</label>";
+  }).join("");
+  openModal("Verdict — " + j.id, '<form data-form="verdict" data-id="' + esc(j.id) + '">' +
+    '<p class="muted small">' + esc(j.title) + (roundCount(j) ? " · round " + esc(roundCount(j)) : "") + " · submitted " + esc(rel(j.submittedAt)) + "</p>" +
+    (r.url ? '<p class="small">Work: ' + linkHtml(r.url) + "</p>" : "") +
+    '<label>Verdict</label><div class="catgrid" style="flex-direction:column;align-items:stretch">' + opts + "</div>" +
+    '<label>Link to the inspection report</label><input name="report" type="text" inputmode="url" placeholder="docs.example.com/inspection-' + esc(String(j.id).toLowerCase()) + '">' +
+    '<label>Note</label><textarea name="note" placeholder="What is good, and what needs fixing"></textarea>' +
+    '<p class="field-note">Approved closes the writing and waits for the live step. Changes needed sends the card back with your note. Rejected ends it.</p>' +
     '<div class="modal-foot"><button type="button" class="btn ghost" data-act="close-modal">Cancel</button>' +
-    '<button class="btn danger solid" type="submit">Send back</button></div></form>');
+    '<button class="btn" type="submit">Send verdict</button></div></form>', true);
 }
 
 function pinModal(bot) {
