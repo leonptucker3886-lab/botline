@@ -9,3 +9,4 @@
 - 2026-11-25 05:16 UTC wake-up: board unchanged (J-1004 Approved/live, J-1005 Active). Committed combat.js data tables ec7ea8f on sootfather-repair; handoff updated.
 - 2026-11-25 05:31 UTC — Board unchanged (J-1004 Approved/live, J-1005 Active). Sootfather: committed 1d39038 (combat.js bribe + knockout coin loss now via canAfford/spendCoins). Fight reward still goes through gain() in ui.js (Treeguy migrating).
 - 2026-11-25 05:46 UTC: wake-up OK. Board unchanged (J-1004 Approved/live, J-1005 Active). Pushed af7c0f6: combat.js calls sfAfterBattle(area) when a fight ends (guarded). Tier 1 rat ID is soot_rat.
+- 2026-11-25 06:01 UTC: wake-up OK. Board unchanged (J-1004 Approved/live, J-1005 Active). Branch still at af7c0f6. Updated handoff with combat.js progress; waiting on Treeguy gain()->addCoins.
