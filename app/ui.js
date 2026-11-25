@@ -190,7 +190,7 @@ function viewDash() {
   var attn = items.length ? items.slice(0, 6).map(function (x) {
     return '<button class="attn" data-act="open-job" data-id="' + esc(x.j.id) + '">' +
       '<span class="attn-main"><b>' + esc(x.j.id) + " · " + esc(x.j.title) + "</b>" +
-      '<span class="muted">' + esc(x.j.assigneeName || "Unassigned") + " · " + esc(x.j.typeName || "") +
+      '<span class="muted">' + esc(assigneeNames(x.j) || "Unassigned") + " · " + esc(x.j.typeName || "") +
       " · " + esc(dueInfo(x.j).text) + "</span></span>" +
       '<span class="pill ' + x.cls + '">' + esc(x.label) + "</span></button>";
   }).join("") : '<p class="empty">Nothing is stuck. The board is under control.</p>';
@@ -304,7 +304,7 @@ function jobCard(j) {
   var due = dueInfo(j);
   var me = currentBot();
   var canClaim = j.status === "Open" && me && !activeJobOf(me.id);
-  var mine = me && j.assignee === me.id && (j.status === "Active" || j.status === "Blocked");
+  var mine = me && onJob(j, me.id) && (j.status === "Active" || j.status === "Blocked");
   var acts = "";
   if (canClaim) acts += '<button class="btn sm" data-act="claim" data-id="' + esc(j.id) + '">Claim</button>';
   if (mine) acts += '<button class="btn ghost sm" data-act="checkin-open" data-id="' + esc(j.id) + '">Update checkpoints</button>';
@@ -314,8 +314,8 @@ function jobCard(j) {
     "<h3>" + esc(j.title) + "</h3>" +
     '<p class="brief">' + esc(j.brief || "No brief yet.") + "</p>" +
     '<div class="bar"><i style="width:' + p.pct + '%"></i></div>' +
-    '<div class="jcard-meta"><span><i class="dot ' + (j.assignee ? "on" : "") + '"></i>' +
-    esc(j.assigneeName || "Unassigned") + "</span><span>" + p.done + "/" + p.total +
+    '<div class="jcard-meta"><span><i class="dot ' + (jobAssignees(j).length ? "on" : "") + '"></i>' +
+    esc(assigneeNames(j) || "Unassigned") + "</span><span>" + p.done + "/" + p.total +
     (roundCount(j) ? " · round " + roundCount(j) : "") +
     ' · <span class="' + due.cls + '">' + esc(due.text) + "</span></span></div>" +
     '<div class="jcard-acts">' + acts + "</div></article>";
@@ -326,7 +326,7 @@ function viewBoard() {
   if (boardFilter.status !== "all") list = list.filter(function (j) { return j.status === boardFilter.status; });
   if (boardFilter.type !== "all") list = list.filter(function (j) { return j.type === boardFilter.type; });
   var me = currentBot();
-  if (boardFilter.mine && me) list = list.filter(function (j) { return j.assignee === me.id; });
+  if (boardFilter.mine && me) list = list.filter(function (j) { return onJob(j, me.id); });
   var order = { Open: 0, Active: 1, Review: 2, Blocked: 3, Approved: 4, Live: 5, Rejected: 6, Done: 7 };
   list.sort(function (a, b) {
     var s = (order[a.status] || 0) - (order[b.status] || 0);
@@ -408,9 +408,9 @@ function viewInspect() {
 
   var rows = queue.length ? queue.map(function (j) {
     var r = lastRound(j) || {};
-    return '<div class="trow">' + avatar(j.submittedBy || j.assigneeName || "?") +
+    return '<div class="trow">' + avatar(j.submittedBy || assigneeNames(j) || "?") +
       '<div class="tinfo"><b>' + esc(j.id) + " · " + esc(j.title) + "</b><span>" +
-      esc(j.submittedBy || j.assigneeName || "someone") + (roundCount(j) ? " · round " + esc(roundCount(j)) : "") + " · submitted " +
+      esc(j.submittedBy || assigneeNames(j) || "someone") + (roundCount(j) ? " · round " + esc(roundCount(j)) : "") + " · submitted " +
       esc(rel(j.submittedAt)) + (r.url ? " · " + linkHtml(r.url) : "") + " · " + esc(dueInfo(j).text) + "</span></div>" +
       '<div class="row">' +
       '<button class="btn ghost sm" data-act="open-job" data-id="' + esc(j.id) + '">Open</button>' +
@@ -421,7 +421,7 @@ function viewInspect() {
   }).join("") : '<p class="empty">Nothing is waiting on you. Submissions land here the moment a writer sends one.</p>';
 
   var liveRows = approved.length ? approved.map(function (j) {
-    return '<div class="trow">' + avatar(j.assigneeName || "?") + '<div class="tinfo"><b>' + esc(j.id) + " · " + esc(j.title) +
+    return '<div class="trow">' + avatar(assigneeNames(j) || "?") + '<div class="tinfo"><b>' + esc(j.id) + " · " + esc(j.title) +
       "</b><span>approved " + esc(rel(j.approvedAt)) + " by " + esc(j.approvedBy || "") + "</span></div>" +
       '<button class="btn sm" data-act="mark-live" data-id="' + esc(j.id) + '">Mark live</button></div>';
   }).join("") : '<p class="empty">Nothing approved is waiting to go live.</p>';
@@ -456,6 +456,10 @@ function viewJob() {
   if (j.status === "Open") {
     if (currentBot()) acts += '<button class="btn" data-act="claim" data-id="' + esc(j.id) + '">Claim this job</button>';
     if (isBoss()) acts += '<button class="btn" data-act="assign-modal" data-id="' + esc(j.id) + '">Assign to a bot</button>';
+  }
+  if ((j.status === "Active" || j.status === "Blocked") && jobAssignees(j).length < MAX_ASSIGNEES) {
+    if (isBoss()) acts += '<button class="btn ghost" data-act="assign-modal" data-id="' + esc(j.id) + '">Add a bot (' + jobAssignees(j).length + '/5)</button>';
+    else if (currentBot() && !onJob(j, currentBot().id)) acts += '<button class="btn ghost" data-act="claim" data-id="' + esc(j.id) + '">Join this card</button>';
   }
   if ((j.status === "Active" || j.status === "Blocked") && editable) {
     acts += '<button class="btn" data-act="checkin-open" data-id="' + esc(j.id) + '">Update checkpoints</button>';
@@ -502,7 +506,11 @@ function viewJob() {
   var kv = '<dl class="kv">' +
     "<dt>Project</dt><dd>" + esc(j.typeName || "") + "</dd>" +
     "<dt>Priority</dt><dd>" + esc(j.priority || "Normal") + "</dd>" +
-    "<dt>Assignee</dt><dd>" + esc(j.assigneeName || "Unassigned") + "</dd>" +
+    "<dt>Assignee" + (jobAssignees(j).length > 1 ? "s" : "") + "</dt><dd>" + (jobAssignees(j).length ? jobAssignees(j).map(function (x) {
+      var bn = (botById(x.id) || {}).name || x.name || x.id;
+      var canDrop = isBoss() && (j.status === "Active" || j.status === "Blocked");
+      return esc(bn) + (canDrop ? ' <button class="btn ghost sm" data-act="unassign-bot" data-id="' + esc(j.id) + '" data-bot="' + esc(x.id) + '" title="Take ' + esc(bn) + ' off this card">\u00d7</button>' : "");
+    }).join(", ") : "Unassigned") + "</dd>" +
     "<dt>Deadline</dt><dd>" + esc(fmt(j.deadline)) + " <span class=\"" + due.cls + "\">(" + esc(due.text) + ")</span></dd>" +
     "<dt>SLA</dt><dd>" + (j.slaHours ? esc(j.slaHours) + " hours" : "—") + "</dd>" +
     "<dt>Created</dt><dd>" + esc(fmt(j.createdAt)) + " by " + esc(j.createdBy || "Boss") + "</dd>" +
@@ -512,7 +520,7 @@ function viewJob() {
   return '<button class="back" data-act="nav" data-r="board">← Board</button>' +
     '<div class="detail-head"><div><div class="chiprow">' + typeTag(j) + statusPill(j.status) +
     '<span class="pill pri">' + esc(j.priority || "Normal") + "</span></div><h1>" + esc(j.title) + "</h1>" +
-    '<p class="muted">' + esc(j.id) + " · " + esc(j.assigneeName || "unassigned") + " · " + esc(due.text) + "</p></div>" +
+    '<p class="muted">' + esc(j.id) + " · " + esc(assigneeNames(j) || "unassigned") + " · " + esc(due.text) + "</p></div>" +
     '<div class="headacts">' + acts + "</div></div>" +
     (j.status === "Blocked" && j.blockedReason ? '<div class="panel" style="border-color:color-mix(in srgb,var(--bad) 40%,transparent)"><b class="bad">Blocked — </b>' + esc(j.blockedReason) + "</div>" : "") +
     (j.reviewNote ? '<div class="panel"><b>Review note — </b>' + esc(j.reviewNote) + "</div>" : "") +
@@ -643,8 +651,8 @@ function viewCheckins() {
     return String(a.lastCheckinAt || "").localeCompare(String(b.lastCheckinAt || ""));
   });
   var rows = stale.length ? stale.map(function (j) {
-    return '<div class="trow">' + avatar(j.assigneeName || "?") + '<div class="tinfo"><b>' + esc(j.id) + " · " + esc(j.title) +
-      "</b><span>" + esc(j.assigneeName || "Unassigned") + " · last check-in " + esc(rel(j.lastCheckinAt)) + " · " +
+    return '<div class="trow">' + avatar(assigneeNames(j) || "?") + '<div class="tinfo"><b>' + esc(j.id) + " · " + esc(j.title) +
+      "</b><span>" + esc(assigneeNames(j) || "Unassigned") + " · last check-in " + esc(rel(j.lastCheckinAt)) + " · " +
       esc(progressOf(j).done) + "/" + esc(progressOf(j).total) + " checkpoints</span></div>" +
       '<button class="btn ghost sm" data-act="open-job" data-id="' + esc(j.id) + '">Open</button></div>';
   }).join("") : '<p class="empty">Every active job has checked in inside its window.</p>';
@@ -714,14 +722,15 @@ function jobModal() {
   var opts = S.types.map(function (t) {
     return '<option value="' + esc(t.id) + '">' + esc(t.name) + " — " + esc(t.hours) + "h</option>";
   }).join("");
-  var bots = '<option value="">Leave open for a bot to claim</option>' + S.bots.filter(function (b) { return b.active !== false; })
-    .map(function (b) { return '<option value="' + esc(b.id) + '">' + esc(b.name) + " — " + esc(b.role || "Bot") + "</option>"; }).join("");
+  var bots = S.bots.filter(function (b) { return b.active !== false; })
+    .map(function (b) { return '<label class="cp"><input type="checkbox" name="assignee" value="' + esc(b.id) + '"><span class="cp-label">' + esc(b.name) + " — " + esc(b.role || "Bot") + "</span></label>"; }).join("");
   openModal("New job", '<form data-form="new-job">' +
     '<label for="nj-type">Project type</label><select id="nj-type" name="type" data-change="job-type">' + opts + "</select>" +
     '<label for="nj-title">Title</label><input id="nj-title" name="title" type="text" placeholder="What is being made" required>' +
     '<label for="nj-brief">Brief</label><textarea id="nj-brief" name="brief" placeholder="What it is, who it is for, what done looks like"></textarea>' +
     '<label for="nj-pri">Priority</label><select id="nj-pri" name="priority"><option>Urgent</option><option>High</option><option selected>Normal</option><option>Low</option></select>' +
-    '<label for="nj-assignee">Assign to</label><select id="nj-assignee" name="assignee">' + bots + "</select>" +
+    '<label>Assign to (up to 5 bots)</label><div class="cplist" id="nj-assignee">' + bots + "</div>" +
+    '<p class="field-note">Leave all unticked to let a bot claim it. The first ticked bot is the lead.</p>' +
     '<label for="nj-deadline">Deadline</label><input id="nj-deadline" name="deadline" type="datetime-local" value="">' +
     '<p class="field-note">Leave blank — the deadline starts when a bot takes the job. Pick a date only for a fixed deadline.</p>' +
     '<p class="field-note">Checkpoints are copied from the project type. Edit them on the job after posting.</p>' +
@@ -765,14 +774,19 @@ function assignModal(id) {
   var j = jobById(id);
   if (!j) return;
   var cands = eligibleBots(j);
-  var all = S.bots.filter(function (b) { return b.active !== false; });
+  var team = jobAssignees(j);
+  var room = MAX_ASSIGNEES - team.length;
+  var all = S.bots.filter(function (b) { return b.active !== false && !onJob(j, b.id); });
   openModal("Assign " + j.id, '<form data-form="assign" data-id="' + esc(j.id) + '">' +
-    '<label>Bot</label><select name="bot">' + all.map(function (b) {
+    (team.length ? '<p class="field-note">On this card: ' + esc(assigneeNames(j)) + "</p>" : "") +
+    '<label>Bots (pick up to ' + room + ")</label>" +
+    '<div class="cplist">' + all.map(function (b) {
       var busy = activeJobOf(b.id);
-      return '<option value="' + esc(b.id) + '"' + (cands[0] && cands[0].id === b.id ? " selected" : "") + ">" +
-        esc(b.name) + (busy ? " — busy on " + esc(busy.id) : " — free") + "</option>";
-    }).join("") + "</select>" +
-    '<p class="field-note">Categories: ' + esc(j.typeName) + " jobs want a bot that takes that category.</p>" +
+      return '<label class="cp"><input type="checkbox" name="bot" value="' + esc(b.id) + '"' +
+        (!team.length && cands[0] && cands[0].id === b.id ? " checked" : "") + ">" +
+        '<span class="cp-label">' + esc(b.name) + (busy ? " \u2014 busy on " + esc(busy.id) : " \u2014 free") + "</span></label>";
+    }).join("") + "</div>" +
+    '<p class="field-note">Max 5 bots per card. The first bot is the lead. Categories: ' + esc(j.typeName) + " jobs want a bot that takes that category.</p>" +
     '<div class="modal-foot"><button type="button" class="btn ghost" data-act="close-modal">Cancel</button>' +
     '<button class="btn" type="submit">Assign</button></div></form>');
 }
