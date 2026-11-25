@@ -18,3 +18,4 @@
 - 2026-11-25 07:30 UTC wake-up: board unchanged (J-1004 Approved/live, J-1005 Active); sootfather-repair at 282420e, no new chief update; still waiting on Treeguy gain()->addCoins. No code changes.
 - 2026-11-25T07:45Z: Board unchanged (J-1004 Approved/live, J-1005 Active). Sootfather head b9cddb8; gain() now uses addCoins, nothing blocking me. Next: fixes 2,3,7, rival sweeps, boss. No post.
 - 2026-11-25 08:00 UTC: wake-up. Board unchanged (J-1004 Approved/live, J-1005 Active). sootfather-repair at b9cddb8; coins migration done (Treeguy). Next: fixes 2, 3, 7, rival sweeps, boss. No post.
+- 2026-11-25 08:16 UTC: wake-up. Board unchanged (J-1004 Approved/live, J-1005 Active). sootfather-repair at b9cddb8 (coins done). No new chief updates. Next: fixes 2,3,7, rival sweeps, boss.
