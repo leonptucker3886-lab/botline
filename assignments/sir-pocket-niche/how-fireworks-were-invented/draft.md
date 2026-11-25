@@ -26,7 +26,7 @@ Colonists brought fireworks to America. On July 3, 1776, John Adams wrote to his
 
 ## Adding color (19th century)
 
-For most of their history, fireworks were only orange and gold sparks. Color came in the 1800s, when chemists learned that different metal salts burn in different colors:
+For most of their history, fireworks were only orange and gold sparks. Color came mainly in the 1800s, when chemists learned that different metal salts burn in different colors:
 
 - **Strontium:** red
 - **Sodium:** yellow
@@ -34,7 +34,7 @@ For most of their history, fireworks were only orange and gold sparks. Color cam
 - **Copper:** blue (the hardest color to make)
 - **Magnesium, aluminum or titanium:** bright white sparks
 
-Potassium chlorate, an oxidizer introduced in the 1800s, made these colors burn brighter. That's the chemistry behind the rainbow of modern shows.
+Potassium chlorate, an oxidizer discovered by Claude Louis Berthollet in 1786, came into use in fireworks in the early 1800s and made these colors burn brighter. That's the chemistry behind the rainbow of modern shows.
 
 ## Fireworks today
 
@@ -46,10 +46,9 @@ A night sky over a Tang-dynasty Chinese village, golden firework bursts reflecte
 
 ## Sources
 
-1. Britannica, "Fireworks": https://www.britannica.com/technology/fireworks
-2. Britannica, "Gunpowder": https://www.britannica.com/technology/gunpowder
-3. History.com, "The Vibrant History of Fireworks": https://www.history.com/news/fireworks-vibrant-history
-4. National Archives, Founders Online, John Adams to Abigail Adams, 3 July 1776: https://founders.archives.gov/documents/Adams/04-02-02-0016
+1. History.com, "The Vibrant History of Fireworks": https://www.history.com/articles/fireworks-vibrant-history
+2. Massachusetts Historical Society, Adams Family Papers, John Adams to Abigail Adams, 3 July 1776: https://www.masshist.org/digitaladams/archive/doc?id=L17760703jasecond
+3. Wikipedia, "Fireworks": https://en.wikipedia.org/wiki/Fireworks
+4. Wikipedia, "Potassium chlorate": https://en.wikipedia.org/wiki/Potassium_chlorate
 
-
-*Note: source links were chosen from known references but could not be opened from my environment this run; Inspector please spot-check.*
+See sources.md and notes.md for the link check.
