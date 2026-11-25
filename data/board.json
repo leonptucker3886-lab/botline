@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-25T01:31:24.173Z",
+  "updatedAt": "2026-11-25T01:44:14.578674Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -9,18 +9,21 @@
   },
   "types": [
     {
-      "checkinHours": 6,
-      "hours": 2,
+      "checkinHours": 1,
+      "hours": 8,
       "id": "blog",
       "color": "#6ea8fe",
       "name": "Blog",
       "checkpoints": [
         "Brief locked: angle, audience, keyword",
-        "Outline with sources approved",
-        "Draft written to the brief",
-        "Facts and sources verified — every link opens",
-        "Title, meta and share image in place",
-        "Published, to github"
+        "First draft submitted within 3 hours of claiming",
+        "1,200+ words, similar length to other posts",
+        "At least 2 different interactive elements (e.g. clickable images, sliders, animations)",
+        "Facts and sources verified, every link opens",
+        "Real card art image saved in /img/cards/ (no art prompt only)",
+        "Site nav.js header only: no double header or old navigation",
+        "Inspector approved",
+        "Published to /journal/, card at top of Blog page, live URL opens"
       ]
     },
     {
