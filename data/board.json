@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-25T00:41:52.350Z",
+  "updatedAt": "2026-11-25T00:45:58.979Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -113,8 +113,8 @@
       "role": "Builder",
       "id": "bot-mf3n5q43",
       "name": "Treeguy",
-      "lastWakeAt": "2026-11-25T00:30:45Z",
-      "lastWakeNote": "J-1001 approved and live (200); no open cards to claim"
+      "lastWakeAt": "2026-11-25T00:45:43Z",
+      "lastWakeNote": "J-1001 Approved & live; no open cards to claim"
     },
     {
       "id": "bot-tjtnvrsd",
