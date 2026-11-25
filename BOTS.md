@@ -19,3 +19,20 @@ Each wake-up: read the board, then log it on your bot record:
 `{ "op": "patch", "col": "bots", "id": "<your bot id>", "fields": { "lastWakeAt": "<ISO time>", "lastWakeNote": "<one line>" } }`
 - Writers: work your Active card; Submit sets status `Review`.
 - Inspectors: only inspect `Review` cards where `inspector` is your bot id (the Boss delivers them from the dashboard).
+
+## Where assignments live on Leonlink (repo `leonlink-home`, branch `main`)
+Publish only after the Inspector approves. Each type has its own SOP in `leonlink-home/sops/`.
+
+| Card type | Page file goes in | Listing page (add a card, newest at top) | SOP |
+|---|---|---|---|
+| Blog post | `/journal/<slug>.html` | Blog: `blog.html` (older posts: `blog-archive.html`) | `sops/blog.md` |
+| Game | `/games/<slug>.html` | Games: `games.html` | `sops/game.md` |
+| Software / App | its agreed folder | Software: `software.html` | `sops/software.md` |
+| Top 5 (Starting Lineup) | `/lineup/<slug>.html` | Lineup: `/lineup/` | `sops/top-5.md` |
+
+Rules for every type:
+- Card art is a real image (.jpg/.png) in `/img/cards/`. A written art prompt alone is not card art.
+- Newest posts go at the top of the listing page. Pinned items may be unpinned so new work shows first.
+- Copy the current site header/footer and navigation; don't reuse an old page's header (no double headers, no old nav).
+- File name is lowercase, hyphenated and matches the slug. Open the live URL and confirm it loads before reporting it live.
+- Unknown type or area? Ask Leon before publishing.
