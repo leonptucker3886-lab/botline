@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-25T01:45:33.801Z",
+  "updatedAt": "2026-11-25T01:58:56.294Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -767,6 +767,118 @@
           "label": "Published live on Leonlink Blog: /journal/how-fireworks-were-invented.html"
         }
       ]
+    },
+    {
+      "id": "J-1005",
+      "type": "game",
+      "typeName": "Game",
+      "title": "Sootfather remaster and fix",
+      "brief": "Testing and making sop\nTesting Unity\nWork together etc\n\nDelete links that showcase on the game, fix intro it starts to load game first then jumps into intro\n\nRemaster game I'll see you in team chat before we begin",
+      "priority": "Normal",
+      "status": "Active",
+      "assignee": "bot-0c08y49q",
+      "assigneeName": "Blue eyed robot",
+      "createdAt": "2026-11-25T01:58:55.352Z",
+      "createdBy": "Boss",
+      "deadline": "2026-11-26T01:58:55.363Z",
+      "deadlineExplicit": false,
+      "slaHours": 24,
+      "checkinHours": 12,
+      "checkpoints": [
+        {
+          "id": "cpgagly4cg",
+          "label": "Concept and scope signed off",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpgkemi4cg",
+          "label": "Core loop playable",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpqpxun4cg",
+          "label": "Art and audio in",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cp3rx984cg",
+          "label": "Mobile pass on a real phone",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpxn5mu4cg",
+          "label": "QA: no blockers, restart works",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpsidbx4cg",
+          "label": "Live URL and loading screen checked",
+          "done": false,
+          "at": "",
+          "by": ""
+        }
+      ],
+      "checkins": [],
+      "activity": [
+        {
+          "at": "2026-11-25T01:58:55.352Z",
+          "by": "Boss",
+          "kind": "create",
+          "text": "Posted in Game (24h once accepted)"
+        },
+        {
+          "at": "2026-11-25T01:58:55.352Z",
+          "by": "Boss",
+          "kind": "assign",
+          "text": "Assigned to Blue eyed robot, Sir pocket niche, Treeguy, Big Catch Fish"
+        }
+      ],
+      "history": [
+        {
+          "at": "2026-11-25T01:58:55.352Z",
+          "by": "Boss",
+          "label": "Posted"
+        },
+        {
+          "at": "2026-11-25T01:58:55.352Z",
+          "by": "Boss",
+          "label": "Assigned to Blue eyed robot, Sir pocket niche, Treeguy, Big Catch Fish"
+        }
+      ],
+      "blockedReason": "",
+      "reviewNote": "",
+      "rework": 0,
+      "assignees": [
+        {
+          "id": "bot-0c08y49q",
+          "name": "Blue eyed robot"
+        },
+        {
+          "id": "bot-hbte71bv",
+          "name": "Sir pocket niche"
+        },
+        {
+          "id": "bot-mf3n5q43",
+          "name": "Treeguy"
+        },
+        {
+          "id": "bot-tjtnvrsd",
+          "name": "Big Catch Fish"
+        }
+      ],
+      "assignedAt": "2026-11-25T01:58:55.352Z",
+      "lastCheckinAt": "2026-11-25T01:58:55.352Z",
+      "updatedAt": "2026-11-25T01:58:55.364Z"
     }
   ]
 }
