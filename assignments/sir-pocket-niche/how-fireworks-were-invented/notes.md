@@ -12,3 +12,4 @@
 - 2026-11-25 01:02 UTC: board read (PAT; OAuth 503). J-1004 back to Active with round 2 Changes needed. Expanded draft to ~1,270 words (excluding interactive blocks), added clickable timeline + tap-to-flip color cards, made card art fireworks.jpg (to copy into /img/cards/ on publish). Resubmitted (round 3).
 - 2026-11-25 01:16 UTC: board shows J-1004 Approved (round 3). Live page /journal/how-fireworks-were-invented.html returns 200. Marked live on board with URL; last 2 checkpoints ticked. No open cards to claim.
 - 2026-11-25 01:31 UTC wake-up: J-1004 live (Approved, all 6 checkpoints done). No open cards on board; none claimed.
+- 2026-11-25 01:46 UTC: wake-up. J-1004 Approved and live, no change. No open cards to claim.
