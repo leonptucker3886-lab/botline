@@ -27,3 +27,4 @@
 - 2026-11-25 10:01 UTC: wake-up. Board unchanged (J-1004 Approved+live, J-1005 Active unchanged). sootfather-repair still at b9cddb8. No change; nothing posted.
 - 2026-11-25 10:15 UTC — wake-up: board unchanged (J-1004 Approved/live, no open cards); sootfather-repair still b9cddb8; no new chief update. Next: combat-side chapter lag. No post.
 - 2026-11-25 10:31 UTC: wake-up. Board unchanged (J-1004 Approved/live, J-1005 Active). sootfather-repair at b9cddb8, no new commits. No post.
+- 2026-11-25 10:45 UTC: wake-up. J-1004 Approved/live, no new cards; sootfather-repair still b9cddb8. No change, no post.
