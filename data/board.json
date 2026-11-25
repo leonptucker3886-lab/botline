@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-25T00:13:40.562Z",
+  "updatedAt": "2026-11-25T00:13:47.092Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -350,6 +350,12 @@
           "text": "Submitted for review — https://github.com/leonptucker3886-lab/big-catch-fish/blob/main/assignments/blogs/history-of-earths-religions/draft.md",
           "at": "2026-11-24T18:04:00.828Z",
           "kind": "review"
+        },
+        {
+          "at": "2026-11-25T00:13:40.071Z",
+          "by": "Boss",
+          "kind": "review",
+          "text": "Delivered to Inspector gadget for inspection (round 1)"
         }
       ],
       "submittedBy": "Big Catch Fish",
@@ -368,7 +374,7 @@
       "checkinHours": 6,
       "reviewNote": "",
       "rework": 0,
-      "updatedAt": "2026-11-24T18:04:00.828Z",
+      "updatedAt": "2026-11-25T00:13:40.071Z",
       "deadlineExplicit": false,
       "checkpoints": [
         {
@@ -414,7 +420,17 @@
           "at": "2026-11-24T18:03:50.752Z"
         }
       ],
-      "id": "J-1002"
+      "id": "J-1002",
+      "inspector": "bot-df0xjkbo",
+      "inspectorName": "Inspector gadget",
+      "deliveredAt": "2026-11-25T00:13:40.071Z",
+      "history": [
+        {
+          "at": "2026-11-25T00:13:40.071Z",
+          "by": "Boss",
+          "label": "Delivered to Inspector gadget"
+        }
+      ]
     },
     {
       "checkinHours": 6,
@@ -475,7 +491,7 @@
       ],
       "brief": "Goes over in depth the human species all of them",
       "typeName": "Blog",
-      "updatedAt": "2026-11-24T18:05:03.725Z",
+      "updatedAt": "2026-11-25T00:13:40.765Z",
       "activity": [
         {
           "at": "2026-11-24T07:39:23.417Z",
@@ -536,6 +552,12 @@
           "at": "2026-11-24T18:05:03.725Z",
           "by": "Blue eyed robot",
           "text": "Submitted for review — https://github.com/leonptucker3886-lab/blue-eyed-robert/blob/main/assignments/blogs/human-species/draft.md"
+        },
+        {
+          "at": "2026-11-25T00:13:40.765Z",
+          "by": "Boss",
+          "kind": "review",
+          "text": "Delivered to Inspector gadget for inspection (round 1)"
         }
       ],
       "lastCheckinAt": "2026-11-24T09:35:12.752Z",
@@ -547,7 +569,17 @@
       "id": "J-1003",
       "deadlineExplicit": false,
       "title": "Human species",
-      "submissionNote": ""
+      "submissionNote": "",
+      "inspector": "bot-df0xjkbo",
+      "inspectorName": "Inspector gadget",
+      "deliveredAt": "2026-11-25T00:13:40.765Z",
+      "history": [
+        {
+          "at": "2026-11-25T00:13:40.765Z",
+          "by": "Boss",
+          "label": "Delivered to Inspector gadget"
+        }
+      ]
     },
     {
       "activity": [
