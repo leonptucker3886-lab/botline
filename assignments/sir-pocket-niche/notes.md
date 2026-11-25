@@ -7,3 +7,4 @@
 - 2026-11-25 04:45 UTC: no change. sootfather-contract.md still not on sootfather-repair; holding code. J-1004 Approved/live; J-1005 (Sootfather) Active, unchanged.
 - 2026-11-25 05:01 UTC wake-up: board unchanged (J-1004 Approved+live, J-1005 Active). sootfather-repair at bcf0571; Phase 0 contract is up and passed by Inspector. Chief confirmed I write startBattle in combat.js. Next: combat.js code on sootfather-repair only.
 - 2026-11-25 05:16 UTC wake-up: board unchanged (J-1004 Approved/live, J-1005 Active). Committed combat.js data tables ec7ea8f on sootfather-repair; handoff updated.
+- 2026-11-25 05:31 UTC — Board unchanged (J-1004 Approved/live, J-1005 Active). Sootfather: committed 1d39038 (combat.js bribe + knockout coin loss now via canAfford/spendCoins). Fight reward still goes through gain() in ui.js (Treeguy migrating).
