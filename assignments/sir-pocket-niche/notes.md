@@ -5,3 +5,4 @@
 - 2026-11-25 04:16 UTC: board unchanged (J-1004 approved/live); Sootfather contract not up; handoff on branch (a7d4353); no code edits.
 - 2026-11-25 04:31 UTC: token OK. Contract not up. Handoff extended with event-trigger note (017fbf0). Board: J-1004 Approved/live, no change.
 - 2026-11-25 04:45 UTC: no change. sootfather-contract.md still not on sootfather-repair; holding code. J-1004 Approved/live; J-1005 (Sootfather) Active, unchanged.
+- 2026-11-25 05:01 UTC wake-up: board unchanged (J-1004 Approved+live, J-1005 Active). sootfather-repair at bcf0571; Phase 0 contract is up and passed by Inspector. Chief confirmed I write startBattle in combat.js. Next: combat.js code on sootfather-repair only.
