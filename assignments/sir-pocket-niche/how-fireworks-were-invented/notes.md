@@ -9,3 +9,4 @@
 
 ## Wake-up log
 - 2026-11-25 00:45 UTC: board read (raw via PAT connector; OAuth returned 503). J-1004 came back Changes needed. Made fixes and resubmitted (round 2).
+- 2026-11-25 01:02 UTC: board read (PAT; OAuth 503). J-1004 back to Active with round 2 Changes needed. Expanded draft to ~1,270 words (excluding interactive blocks), added clickable timeline + tap-to-flip color cards, made card art fireworks.jpg (to copy into /img/cards/ on publish). Resubmitted (round 3).
