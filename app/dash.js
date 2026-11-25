@@ -15,7 +15,7 @@ viewDash = function () { return isBoss() ? bossDash() : _baseViewDash(); };
 
 function dueRow(j, cls) {
   return '<button class="attn" data-act="open-job" data-id="' + esc(j.id) + '"><span class="attn-main"><b>' + esc(j.id) + " · " + esc(j.title) + "</b>" +
-    '<span class="muted">' + esc(j.assigneeName || "Unassigned") + " · due " + esc(new Date(j.deadline).toLocaleString()) + "</span></span>" +
+    '<span class="muted">' + esc(assigneeNames(j) || "Unassigned") + " · due " + esc(new Date(j.deadline).toLocaleString()) + "</span></span>" +
     '<span class="pill ' + cls + '">' + esc(dueInfo(j).text) + "</span></button>";
 }
 function panel(title, body, extra) {
@@ -25,14 +25,14 @@ function panel(title, body, extra) {
 function placeForm() {
   var typeOpts = S.types.map(function (t) { return '<option value="' + esc(t.id) + '">' + esc(t.name) + " (" + esc(t.hours) + "h)</option>"; }).join("");
   var writers = S.bots.filter(function (b) { return b.active !== false && !isInspectorBot(b); });
-  var wOpts = '<option value="">Leave open (bots claim it)</option>' + writers.map(function (b) {
+  var wOpts = writers.map(function (b) {
     var a = activeJobOf(b.id);
     return '<option value="' + esc(b.id) + '">' + esc(b.name) + (a ? " (busy on " + esc(a.id) + ")" : "") + "</option>";
   }).join("");
   return panel("Place a card", '<form data-form="quick-job" class="quickjob">' +
     '<label>Title<input name="title" required placeholder="e.g. Best budget headphones"></label>' +
     '<label>Type<select name="type">' + typeOpts + "</select></label>" +
-    '<label>Writer<select name="assignee">' + wOpts + "</select></label>" +
+    '<label>Writers (up to 5; none = open for bots to claim)<select name="assignee" multiple size="5">' + wOpts + "</select></label>" +
     '<label>Due hours<input name="hours" type="number" min="1" step="1" placeholder="type default"></label>' +
     '<label>Priority<select name="priority"><option>Normal</option><option>High</option><option>Urgent</option><option>Low</option></select></label>' +
     '<label class="wide">Brief<textarea name="brief" rows="2" placeholder="Angle, audience, keyword, links"></textarea></label>' +
@@ -49,7 +49,7 @@ function deliverPanel(review) {
     var ctl = insp.length ? '<div class="row"><select data-deliver="' + esc(j.id) + '">' + opts + '</select><button class="btn sm" data-act="deliver" data-id="' + esc(j.id) + '">' + (j.inspectorName ? "Re-send" : "Send") + "</button></div>"
       : '<span class="muted">Add a bot with role Inspector</span>';
     return '<div class="trow deliver"><div class="tinfo"><b><a href="#" data-act="open-job" data-id="' + esc(j.id) + '">' + esc(j.id) + " · " + esc(j.title) + "</a></b>" +
-      "<span>" + esc(j.assigneeName || "") + " · round " + esc(j.round || roundCount(j) || 1) + " · submitted " + esc(rel(j.submittedAt)) + "</span></div>" + sent + ctl + "</div>";
+      "<span>" + esc(assigneeNames(j) || "") + " · round " + esc(j.round || roundCount(j) || 1) + " · submitted " + esc(rel(j.submittedAt)) + "</span></div>" + sent + ctl + "</div>";
   }).join("") : '<p class="empty">Nothing submitted right now.</p>';
   return panel("Submitted: deliver to an inspector", body);
 }
@@ -82,7 +82,7 @@ function inspectionPanel() {
   var pct = function (a, b) { return b ? Math.round(a / b * 100) + "%" : "–"; };
   var rows = cards.sort(function (a, b) { return b.rounds.length - a.rounds.length; }).slice(0, 12).map(function (j) {
     var r = lastRound(j);
-    return "<tr><td>" + esc(j.id) + " · " + esc(j.title) + "</td><td>" + esc(j.assigneeName || "") + "</td><td>" + j.rounds.length +
+    return "<tr><td>" + esc(j.id) + " · " + esc(j.title) + "</td><td>" + esc(assigneeNames(j) || "") + "</td><td>" + j.rounds.length +
       "</td><td>" + esc(r && r.verdict ? verdictLabel(r.verdict) : "waiting") + "</td></tr>";
   }).join("");
   return panel("Inspection results", '<div class="kpis">' +
@@ -164,9 +164,15 @@ document.addEventListener("submit", function (e) {
     checkins: [], activity: [{ at: ts, by: "Boss", kind: "create", text: "Posted in " + t.name + " (" + hours + "h once accepted)" }],
     history: [{ at: ts, by: "Boss", label: "Posted" }], blockedReason: "", reviewNote: "", rework: 0
   };
-  var ab = botById(String(fd.get("assignee") || ""));
-  if (ab) {
-    job.assignee = ab.id; job.assigneeName = ab.name; job.status = "Active"; job.assignedAt = ts; job.lastCheckinAt = ts;
+  var team = [];
+  fd.getAll("assignee").forEach(function (v) {
+    var b = botById(String(v));
+    if (b && !team.some(function (x) { return x.id === b.id; })) team.push({ id: b.id, name: b.name });
+  });
+  if (team.length > MAX_ASSIGNEES) { toast("Max 5 bots per card", "warn"); return; }
+  var ab = team.length ? { name: team.map(function (x) { return x.name; }).join(", ") } : null;
+  if (team.length) {
+    setAssignees(job, team); job.status = "Active"; job.assignedAt = ts; job.lastCheckinAt = ts;
     job.deadline = new Date(Date.now() + hours * 3600000).toISOString();
     job.activity.push({ at: ts, by: "Boss", kind: "assign", text: "Assigned to " + ab.name });
     job.history.push({ at: ts, by: "Boss", label: "Assigned to " + ab.name });
