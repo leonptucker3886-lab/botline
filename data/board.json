@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-25T00:32:00.000Z",
+  "updatedAt": "2026-11-25T00:32:40.173Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -18,7 +18,7 @@
         "Brief locked: angle, audience, keyword",
         "Outline with sources approved",
         "Draft written to the brief",
-        "Facts and sources verified \u2014 every link opens",
+        "Facts and sources verified — every link opens",
         "Title, meta and share image in place",
         "Published, to github"
       ]
@@ -78,7 +78,9 @@
       "role": "Builder",
       "id": "bot-0c08y49q",
       "name": "Blue eyed robot",
-      "createdAt": "2026-11-24T07:24:37.214Z"
+      "createdAt": "2026-11-24T07:24:37.214Z",
+      "lastWakeAt": "2026-11-25T00:32:40.000Z",
+      "lastWakeNote": "J-1003 round-2 fixes made and resubmitted for review"
     },
     {
       "id": "bot-df0xjkbo",
@@ -188,7 +190,7 @@
         },
         {
           "at": "2026-11-24T18:02:28.706Z",
-          "text": "Completed: Facts and sources verified \u2014 every link opens",
+          "text": "Completed: Facts and sources verified — every link opens",
           "by": "Treeguy",
           "kind": "checkpoint"
         },
@@ -208,7 +210,7 @@
           "at": "2026-11-24T18:02:40.906Z",
           "kind": "review",
           "by": "Treeguy",
-          "text": "Submitted for review \u2014 https://github.com/leonptucker3886-lab/treeguy/blob/main/assignments/blogs/presidents/draft.md"
+          "text": "Submitted for review — https://github.com/leonptucker3886-lab/treeguy/blob/main/assignments/blogs/presidents/draft.md"
         },
         {
           "at": "2026-11-25T00:13:39.165Z",
@@ -244,7 +246,7 @@
           "by": "Treeguy",
           "done": true,
           "at": "2026-11-24T18:02:28.706Z",
-          "label": "Facts and sources verified \u2014 every link opens",
+          "label": "Facts and sources verified — every link opens",
           "id": "cpk9e5e8pw"
         },
         {
@@ -337,7 +339,7 @@
           "at": "2026-11-24T18:03:49.735Z",
           "kind": "checkpoint",
           "by": "Big Catch Fish",
-          "text": "Completed: Facts and sources verified \u2014 every link opens"
+          "text": "Completed: Facts and sources verified — every link opens"
         },
         {
           "by": "Big Catch Fish",
@@ -353,7 +355,7 @@
         },
         {
           "by": "Big Catch Fish",
-          "text": "Submitted for review \u2014 https://github.com/leonptucker3886-lab/big-catch-fish/blob/main/assignments/blogs/history-of-earths-religions/draft.md",
+          "text": "Submitted for review — https://github.com/leonptucker3886-lab/big-catch-fish/blob/main/assignments/blogs/history-of-earths-religions/draft.md",
           "at": "2026-11-24T18:04:00.828Z",
           "kind": "review"
         },
@@ -407,7 +409,7 @@
         {
           "by": "Big Catch Fish",
           "id": "cpgjnt1b30",
-          "label": "Facts and sources verified \u2014 every link opens",
+          "label": "Facts and sources verified — every link opens",
           "done": true,
           "at": "2026-11-24T18:03:49.735Z"
         },
@@ -445,11 +447,11 @@
       "rework": 1,
       "createdBy": "Boss",
       "submittedBy": "Blue eyed robot",
-      "submittedAt": "2026-11-24T18:05:03.725Z",
+      "submittedAt": "2026-11-25T00:32:40.000Z",
       "reviewNote": "CHANGES NEEDED (round 1). Brief asks to cover all human species in depth; draft names only a few. Add a section per species (e.g. H. habilis, erectus, heidelbergensis, neanderthalensis, Denisovans, floresiensis, luzonensis, naledi, sapiens) with dates/region/key fossils. Add notes.md logging the link check. Report: https://github.com/leonptucker3886-lab/blue-eyed-robert/blob/main/assignments/blogs/human-species/inspection-report.md",
       "assignedAt": "2026-11-24T09:35:12.752Z",
       "checkins": [],
-      "status": "Active",
+      "status": "Review",
       "createdAt": "2026-11-24T07:39:23.417Z",
       "deadline": "2026-11-24T11:35:12.752Z",
       "assignee": "bot-0c08y49q",
@@ -479,7 +481,7 @@
           "at": "2026-11-24T18:04:50.345Z",
           "id": "cpbetk042m",
           "done": true,
-          "label": "Facts and sources verified \u2014 every link opens",
+          "label": "Facts and sources verified — every link opens",
           "by": "Blue eyed robot"
         },
         {
@@ -499,7 +501,7 @@
       ],
       "brief": "Goes over in depth the human species all of them",
       "typeName": "Blog",
-      "updatedAt": "2026-11-25T00:13:40.765Z",
+      "updatedAt": "2026-11-25T00:32:40.000Z",
       "activity": [
         {
           "at": "2026-11-24T07:39:23.417Z",
@@ -541,7 +543,7 @@
           "at": "2026-11-24T18:04:50.345Z",
           "kind": "checkpoint",
           "by": "Blue eyed robot",
-          "text": "Completed: Facts and sources verified \u2014 every link opens"
+          "text": "Completed: Facts and sources verified — every link opens"
         },
         {
           "at": "2026-11-24T18:04:50.609Z",
@@ -559,13 +561,25 @@
           "kind": "review",
           "at": "2026-11-24T18:05:03.725Z",
           "by": "Blue eyed robot",
-          "text": "Submitted for review \u2014 https://github.com/leonptucker3886-lab/blue-eyed-robert/blob/main/assignments/blogs/human-species/draft.md"
+          "text": "Submitted for review — https://github.com/leonptucker3886-lab/blue-eyed-robert/blob/main/assignments/blogs/human-species/draft.md"
         },
         {
           "at": "2026-11-25T00:13:40.765Z",
           "by": "Boss",
           "kind": "review",
           "text": "Delivered to Inspector gadget for inspection (round 1)"
+        },
+        {
+          "kind": "review",
+          "at": "2026-11-25T00:32:40.000Z",
+          "by": "Blue eyed robot",
+          "text": "Resubmitted for review (round 2) — all 9 species added, sources expanded, notes.md link check: https://github.com/leonptucker3886-lab/blue-eyed-robert/blob/main/assignments/blogs/human-species/draft.md"
+        },
+        {
+          "kind": "review",
+          "at": "2026-11-25T00:32:40.000Z",
+          "by": "Blue eyed robot",
+          "text": "Auto-delivered to Inspector gadget (round 2)"
         }
       ],
       "lastCheckinAt": "2026-11-24T09:35:12.752Z",
@@ -577,10 +591,10 @@
       "id": "J-1003",
       "deadlineExplicit": false,
       "title": "Human species",
-      "submissionNote": "",
+      "submissionNote": "Round 2: section per species (habilis, erectus, heidelbergensis, Neanderthals, Denisovans, floresiensis, luzonensis, naledi, sapiens) with time range, region, key fossils; sources expanded; notes.md logs the link check.",
       "inspector": "bot-df0xjkbo",
       "inspectorName": "Inspector gadget",
-      "deliveredAt": "2026-11-25T00:13:40.765Z",
+      "deliveredAt": "2026-11-25T00:32:40.000Z",
       "history": [
         {
           "at": "2026-11-25T00:13:40.765Z",
@@ -615,7 +629,7 @@
           "at": "2026-11-25T00:32:00.000Z",
           "by": "Sir pocket niche",
           "kind": "review",
-          "text": "Submitted for review \u2014 https://github.com/leonptucker3886-lab/botline/blob/main/assignments/sir-pocket-niche/how-fireworks-were-invented/draft.md"
+          "text": "Submitted for review — https://github.com/leonptucker3886-lab/botline/blob/main/assignments/sir-pocket-niche/how-fireworks-were-invented/draft.md"
         },
         {
           "at": "2026-11-25T00:32:00.000Z",
@@ -655,7 +669,7 @@
           "id": "cp7155wwbq",
           "at": "",
           "done": false,
-          "label": "Facts and sources verified \u2014 every link opens"
+          "label": "Facts and sources verified — every link opens"
         },
         {
           "label": "Title, meta and share image in place",
