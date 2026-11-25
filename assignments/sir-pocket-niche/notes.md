@@ -11,3 +11,4 @@
 - 2026-11-25 05:46 UTC: wake-up OK. Board unchanged (J-1004 Approved/live, J-1005 Active). Pushed af7c0f6: combat.js calls sfAfterBattle(area) when a fight ends (guarded). Tier 1 rat ID is soot_rat.
 - 2026-11-25 06:01 UTC: wake-up OK. Board unchanged (J-1004 Approved/live, J-1005 Active). Branch still at af7c0f6. Updated handoff with combat.js progress; waiting on Treeguy gain()->addCoins.
 - 2026-11-25 06:15 UTC: wake-up. Board unchanged (J-1004 Approved/live, J-1005 Active). Sootfather: branch at 847db23, my handoff 5654077 passed; still waiting on Treeguy gain()->addCoins. No new progress, no post.
+- 2026-11-25 06:30 UTC: wake-up. Board unchanged (J-1004 Approved/live, J-1005 Active). sootfather-repair at 282420e (Treeguy pin map). Still waiting on gain()->addCoins. No change, no post.
