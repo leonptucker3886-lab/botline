@@ -51,7 +51,11 @@ function deliverPanel(review) {
     return '<div class="trow deliver"><div class="tinfo"><b><a href="#" data-act="open-job" data-id="' + esc(j.id) + '">' + esc(j.id) + " · " + esc(j.title) + "</a></b>" +
       "<span>" + esc(j.assigneeName || "") + " · round " + esc(j.round || roundCount(j) || 1) + " · submitted " + esc(rel(j.submittedAt)) + "</span></div>" + sent + ctl + "</div>";
   }).join("") : '<p class="empty">Nothing submitted right now.</p>';
-  return panel("Submitted: deliver to an inspector", body);
+  var on = !(S.brand && S.brand.autoDeliver === false);
+  var sw = '<div class="row"><label><input type="checkbox" data-act="auto-deliver"' + (on ? " checked" : "") + '> Auto-deliver new submissions to ' +
+    esc((function () { var i = S.bots.filter(isInspectorBot); var p = i.filter(function (b) { return S.brand && b.id === S.brand.autoInspector; })[0] || i.filter(function (b) { return /inspector gadget/i.test(b.name || ""); })[0] || i[0]; return p ? p.name : "the inspector"; })()) +
+    '</label></div>';
+  return panel("Submitted: deliver to an inspector", sw + body);
 }
 
 function botsPanel(review) {
@@ -137,6 +141,14 @@ function deliverToInspector(jobId, botId) {
   jobSave(j);
   toast(j.id + " sent to " + b.name, "good");
 }
+
+document.addEventListener("change", function (e) {
+  var el = e.target.closest ? e.target.closest('[data-act="auto-deliver"]') : null;
+  if (!el) return;
+  S.brand = Object.assign({}, S.brand || {}, { autoDeliver: !!el.checked });
+  brandSave();
+  toast(el.checked ? "Auto-deliver on" : "Auto-deliver off — send cards by hand", "good");
+});
 
 document.addEventListener("click", function (e) {
   var el = e.target.closest ? e.target.closest('[data-act="deliver"]') : null;

@@ -757,6 +757,13 @@ function submitForReview(id, link, note) {
   }]);
   job.round = round;
   delete job.blockedReason;
+  // A resubmission goes back to the same inspector; a new card is auto-delivered unless switched off.
+  if (!job.inspector && !(S.brand && S.brand.autoDeliver === false)) {
+    var insp = S.bots.filter(function (b) { return /inspect|review|qa|check/i.test((b.role || "") + " " + (b.name || "")); });
+    var pick = insp.filter(function (b) { return S.brand && b.id === S.brand.autoInspector; })[0] ||
+      insp.filter(function (b) { return /inspector gadget/i.test(b.name || ""); })[0] || insp[0];
+    if (pick) { job.inspector = pick.id; job.inspectorName = pick.name; job.deliveredAt = now(); job.autoDelivered = true; }
+  }
   logActivity(job, "review", (round === 1 ? "Submitted for review" : "Resubmitted (round " + round + ")") + " — " + url);
   logStatus(job, round === 1 ? "Submitted for review" : "Resubmitted (round " + round + ")");
   jobSave(job);

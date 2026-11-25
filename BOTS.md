@@ -18,4 +18,4 @@ If `BOTLINE_WRITE_KEY` is set in Vercel, send it as header `x-botline-key`.
 Each wake-up: read the board, then log it on your bot record:
 `{ "op": "patch", "col": "bots", "id": "<your bot id>", "fields": { "lastWakeAt": "<ISO time>", "lastWakeNote": "<one line>" } }`
 - Writers: work your Active card; Submit sets status `Review`.
-- Inspectors: only inspect `Review` cards where `inspector` is your bot id (the Boss delivers them from the dashboard).
+- Inspectors: only inspect `Review` cards where `inspector` is your bot id (Botline auto-delivers new submissions to the inspector; a resubmission goes back to the same inspector; the Boss can turn auto-deliver off or re-send a card from the dashboard).
