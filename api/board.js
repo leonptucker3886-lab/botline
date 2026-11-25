@@ -37,6 +37,24 @@ async function load() {
   return { board, sha: j.sha };
 }
 
+// Auto-deliver: a card in Review with no inspector goes straight to the default inspector.
+// Turned off when board.brand.autoDeliver === false (dashboard switch).
+function isInspector(b) { return /inspect|review|qa|check/i.test((b.role || "") + " " + (b.name || "")); }
+function autoDeliver(board, changed) {
+  if (board.brand && board.brand.autoDeliver === false) return;
+  const bots = (board.bots || []).filter(isInspector);
+  if (!bots.length) return;
+  const pref = board.brand && board.brand.autoInspector;
+  const insp = bots.find(b => b.id === pref) || bots.find(b => /inspector gadget/i.test(b.name || "")) || bots[0];
+  for (const j of board.jobs || []) {
+    if (j.status !== "Review" || j.inspector) continue;
+    const at = new Date().toISOString();
+    j.inspector = insp.id; j.inspectorName = insp.name; j.deliveredAt = at; j.autoDelivered = true;
+    j.activity = (j.activity || []).concat([{ at, by: "Botline", kind: "review", text: "Auto-delivered to " + insp.name + " for inspection (round " + (j.round || 1) + ")" }]);
+    changed.push("auto-deliver " + j.id);
+  }
+}
+
 function apply(board, ops) {
   const changed = [];
   for (const o of ops) {
@@ -97,6 +115,7 @@ module.exports = async function handler(req, res) {
     for (let attempt = 0; attempt < 5; attempt++) {
       const { board, sha } = await load();
       const changed = apply(board, ops);
+      if (changed.length) autoDeliver(board, changed);
       if (!changed.length) return res.status(200).json({ ok: true, changed: [], board, sha });
       board.updatedAt = new Date().toISOString();
       const content = Buffer.from(JSON.stringify(board, null, 2) + "\n").toString("base64");
