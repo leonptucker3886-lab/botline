@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-25T00:11:18.840Z",
+  "updatedAt": "2026-11-25T00:13:40.562Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -132,7 +132,7 @@
       "checkinHours": 6,
       "id": "J-1001",
       "checkins": [],
-      "updatedAt": "2026-11-24T18:02:40.906Z",
+      "updatedAt": "2026-11-25T00:13:39.166Z",
       "activity": [
         {
           "at": "2026-11-24T07:35:36.162Z",
@@ -205,6 +205,12 @@
           "kind": "review",
           "by": "Treeguy",
           "text": "Submitted for review — https://github.com/leonptucker3886-lab/treeguy/blob/main/assignments/blogs/presidents/draft.md"
+        },
+        {
+          "at": "2026-11-25T00:13:39.165Z",
+          "by": "Boss",
+          "kind": "review",
+          "text": "Delivered to Inspector gadget for inspection (round 1)"
         }
       ],
       "assignedAt": "2026-11-24T09:27:58.570Z",
@@ -265,7 +271,17 @@
       "submissionUrl": "https://github.com/leonptucker3886-lab/treeguy/blob/main/assignments/blogs/presidents/draft.md",
       "lastCheckinAt": "2026-11-24T09:27:58.570Z",
       "priority": "Normal",
-      "reviewNote": ""
+      "reviewNote": "",
+      "inspector": "bot-df0xjkbo",
+      "inspectorName": "Inspector gadget",
+      "deliveredAt": "2026-11-25T00:13:39.164Z",
+      "history": [
+        {
+          "at": "2026-11-25T00:13:39.166Z",
+          "by": "Boss",
+          "label": "Delivered to Inspector gadget"
+        }
+      ]
     },
     {
       "brief": "History of religions site your sources",
