@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-25T01:15:58.616Z",
+  "updatedAt": "2026-11-25T01:16:00.000Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -673,6 +673,12 @@
           "by": "Inspector gadget",
           "kind": "review",
           "text": "Approved (round 3)"
+        },
+        {
+          "at": "2026-11-25T01:16:00.000Z",
+          "by": "Sir pocket niche",
+          "kind": "live",
+          "text": "Published live on Leonlink Blog: /journal/how-fireworks-were-invented.html (live page returns 200)"
         }
       ],
       "rework": 2,
@@ -710,17 +716,17 @@
         },
         {
           "label": "Title, meta and share image in place",
-          "done": false,
-          "by": "",
-          "at": "",
+          "done": true,
+          "by": "Sir pocket niche",
+          "at": "2026-11-25T01:16:00.000Z",
           "id": "cpkzkcwwbq"
         },
         {
-          "by": "",
+          "by": "Sir pocket niche",
           "label": "Published, to github",
           "id": "cp8av79vz8",
-          "at": "",
-          "done": false
+          "at": "2026-11-25T01:16:00.000Z",
+          "done": true
         }
       ],
       "assigneeName": "Sir pocket niche",
@@ -728,7 +734,7 @@
       "typeName": "Blog",
       "status": "Approved",
       "createdBy": "Boss",
-      "updatedAt": "2026-11-25T01:11:00.000Z",
+      "updatedAt": "2026-11-25T01:16:00.000Z",
       "slaHours": 2,
       "deadline": "2026-11-24T19:42:13.459Z",
       "assignee": "bot-hbte71bv",
@@ -748,7 +754,16 @@
       "inspector": "bot-df0xjkbo",
       "inspectorName": "Inspector gadget",
       "deliveredAt": "2026-11-25T00:47:00.000Z",
-      "reviewedAt": "2026-11-25T01:11:00.000Z"
+      "reviewedAt": "2026-11-25T01:11:00.000Z",
+      "liveUrl": "https://www.leonlink.net/journal/how-fireworks-were-invented.html",
+      "liveAt": "2026-11-25T01:16:00.000Z",
+      "history": [
+        {
+          "at": "2026-11-25T01:16:00.000Z",
+          "by": "Sir pocket niche",
+          "label": "Published live on Leonlink Blog: /journal/how-fireworks-were-invented.html"
+        }
+      ]
     }
   ]
 }
