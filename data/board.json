@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-25T00:32:40.173Z",
+  "updatedAt": "2026-11-25T00:41:52.350Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -91,8 +91,8 @@
       "categories": [],
       "lastSeenAt": "2026-11-24T23:32:43.408Z",
       "createdAt": "2026-11-24T07:43:37.764Z",
-      "lastWakeAt": "2026-11-25T00:24:00Z",
-      "lastWakeNote": "Inspected J-1001 (approved), J-1002 (approved), J-1003 (changes needed)"
+      "lastWakeAt": "2026-11-25T00:41:00.000Z",
+      "lastWakeNote": "J-1003 approved (round 2); J-1004 changes needed (round 1)"
     },
     {
       "role": "Builder",
@@ -448,10 +448,10 @@
       "createdBy": "Boss",
       "submittedBy": "Blue eyed robot",
       "submittedAt": "2026-11-25T00:32:40.000Z",
-      "reviewNote": "CHANGES NEEDED (round 1). Brief asks to cover all human species in depth; draft names only a few. Add a section per species (e.g. H. habilis, erectus, heidelbergensis, neanderthalensis, Denisovans, floresiensis, luzonensis, naledi, sapiens) with dates/region/key fossils. Add notes.md logging the link check. Report: https://github.com/leonptucker3886-lab/blue-eyed-robert/blob/main/assignments/blogs/human-species/inspection-report.md",
+      "reviewNote": "APPROVED (round 2). All 9 species covered with dates/region/fossils; sources and link check in order. Optional: reword luzonensis range as 'about 67,000–50,000 years ago'. Report: https://github.com/leonptucker3886-lab/blue-eyed-robert/blob/main/assignments/blogs/human-species/inspection-report.md",
       "assignedAt": "2026-11-24T09:35:12.752Z",
       "checkins": [],
-      "status": "Review",
+      "status": "Approved",
       "createdAt": "2026-11-24T07:39:23.417Z",
       "deadline": "2026-11-24T11:35:12.752Z",
       "assignee": "bot-0c08y49q",
@@ -501,7 +501,7 @@
       ],
       "brief": "Goes over in depth the human species all of them",
       "typeName": "Blog",
-      "updatedAt": "2026-11-25T00:32:40.000Z",
+      "updatedAt": "2026-11-25T00:41:00.000Z",
       "activity": [
         {
           "at": "2026-11-24T07:39:23.417Z",
@@ -602,7 +602,7 @@
           "label": "Delivered to Inspector gadget"
         }
       ],
-      "reviewedAt": "2026-11-25T00:24:00Z",
+      "reviewedAt": "2026-11-25T00:41:00.000Z",
       "reviewedBy": "Inspector gadget"
     },
     {
@@ -638,10 +638,10 @@
           "text": "Delivered to Inspector gadget for inspection (round 1)"
         }
       ],
-      "rework": 0,
+      "rework": 1,
       "blockedReason": "",
       "title": "How fireworks were invented",
-      "reviewNote": "",
+      "reviewNote": "CHANGES NEEDED (round 1). Content accurate. Open and verify every source link and log it in notes.md; add sources.md; complete the remaining checkpoints; fix potassium chlorate date (late 1700s). Report: https://github.com/leonptucker3886-lab/botline/blob/main/assignments/sir-pocket-niche/how-fireworks-were-invented/inspection-report.md",
       "checkpoints": [
         {
           "id": "cpjfzcrwbq",
@@ -689,9 +689,9 @@
       "assigneeName": "Sir pocket niche",
       "createdAt": "2026-11-24T07:40:00.038Z",
       "typeName": "Blog",
-      "status": "In review",
+      "status": "Active",
       "createdBy": "Boss",
-      "updatedAt": "2026-11-25T00:32:00.000Z",
+      "updatedAt": "2026-11-25T00:41:00.000Z",
       "slaHours": 2,
       "deadline": "2026-11-24T19:42:13.459Z",
       "assignee": "bot-hbte71bv",
@@ -710,7 +710,8 @@
       "submissionNote": "Sources listed; links not opened by writer",
       "inspector": "bot-df0xjkbo",
       "inspectorName": "Inspector gadget",
-      "deliveredAt": "2026-11-25T00:32:00.000Z"
+      "deliveredAt": "2026-11-25T00:32:00.000Z",
+      "reviewedAt": "2026-11-25T00:41:00.000Z"
     }
   ]
 }
