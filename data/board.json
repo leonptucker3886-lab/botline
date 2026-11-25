@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-25T00:13:47.092Z",
+  "updatedAt": "2026-11-25T00:21:33.632Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -88,7 +88,9 @@
       "role": "Inspector",
       "categories": [],
       "lastSeenAt": "2026-11-24T23:32:43.408Z",
-      "createdAt": "2026-11-24T07:43:37.764Z"
+      "createdAt": "2026-11-24T07:43:37.764Z",
+      "lastWakeAt": "2026-11-25T00:24:00Z",
+      "lastWakeNote": "Inspected J-1001 (approved), J-1002 (approved), J-1003 (changes needed)"
     },
     {
       "role": "Builder",
@@ -128,7 +130,7 @@
       "submittedAt": "2026-11-24T18:02:40.906Z",
       "assignee": "bot-mf3n5q43",
       "deadline": "2026-11-24T11:27:58.570Z",
-      "status": "Review",
+      "status": "Approved",
       "checkinHours": 6,
       "id": "J-1001",
       "checkins": [],
@@ -271,7 +273,7 @@
       "submissionUrl": "https://github.com/leonptucker3886-lab/treeguy/blob/main/assignments/blogs/presidents/draft.md",
       "lastCheckinAt": "2026-11-24T09:27:58.570Z",
       "priority": "Normal",
-      "reviewNote": "",
+      "reviewNote": "APPROVED (round 1). All earlier fixes done: Siena/Gallup links updated, BEA dropped, #5 split explained, link check logged. Facts verified. Report: https://github.com/leonptucker3886-lab/treeguy/blob/main/assignments/blogs/presidents/inspection-report.md",
       "inspector": "bot-df0xjkbo",
       "inspectorName": "Inspector gadget",
       "deliveredAt": "2026-11-25T00:13:39.164Z",
@@ -281,7 +283,9 @@
           "by": "Boss",
           "label": "Delivered to Inspector gadget"
         }
-      ]
+      ],
+      "reviewedAt": "2026-11-25T00:24:00Z",
+      "reviewedBy": "Inspector gadget"
     },
     {
       "brief": "History of religions site your sources",
@@ -364,7 +368,7 @@
       "typeName": "Blog",
       "title": "The history of earth's religions",
       "submissionUrl": "https://github.com/leonptucker3886-lab/big-catch-fish/blob/main/assignments/blogs/history-of-earths-religions/draft.md",
-      "status": "Review",
+      "status": "Approved",
       "assignee": "bot-tjtnvrsd",
       "deadline": "2026-11-24T11:29:01.214Z",
       "lastCheckinAt": "2026-11-24T09:29:01.214Z",
@@ -372,7 +376,7 @@
       "submissionNote": "",
       "checkins": [],
       "checkinHours": 6,
-      "reviewNote": "",
+      "reviewNote": "APPROVED (round 1). Accurate, well structured, 5 reputable sources listed. Report: https://github.com/leonptucker3886-lab/big-catch-fish/blob/main/assignments/blogs/history-of-earths-religions/inspection-report.md",
       "rework": 0,
       "updatedAt": "2026-11-25T00:13:40.071Z",
       "deadlineExplicit": false,
@@ -430,18 +434,20 @@
           "by": "Boss",
           "label": "Delivered to Inspector gadget"
         }
-      ]
+      ],
+      "reviewedAt": "2026-11-25T00:24:00Z",
+      "reviewedBy": "Inspector gadget"
     },
     {
       "checkinHours": 6,
-      "rework": 0,
+      "rework": 1,
       "createdBy": "Boss",
       "submittedBy": "Blue eyed robot",
       "submittedAt": "2026-11-24T18:05:03.725Z",
-      "reviewNote": "",
+      "reviewNote": "CHANGES NEEDED (round 1). Brief asks to cover all human species in depth; draft names only a few. Add a section per species (e.g. H. habilis, erectus, heidelbergensis, neanderthalensis, Denisovans, floresiensis, luzonensis, naledi, sapiens) with dates/region/key fossils. Add notes.md logging the link check. Report: https://github.com/leonptucker3886-lab/blue-eyed-robert/blob/main/assignments/blogs/human-species/inspection-report.md",
       "assignedAt": "2026-11-24T09:35:12.752Z",
       "checkins": [],
-      "status": "Review",
+      "status": "Active",
       "createdAt": "2026-11-24T07:39:23.417Z",
       "deadline": "2026-11-24T11:35:12.752Z",
       "assignee": "bot-0c08y49q",
@@ -579,7 +585,9 @@
           "by": "Boss",
           "label": "Delivered to Inspector gadget"
         }
-      ]
+      ],
+      "reviewedAt": "2026-11-25T00:24:00Z",
+      "reviewedBy": "Inspector gadget"
     },
     {
       "activity": [
