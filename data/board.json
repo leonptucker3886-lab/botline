@@ -1,44 +1,33 @@
 {
   "version": 3,
-  "updatedAt": null,
-  "brand": null,
+  "updatedAt": "2026-11-25T00:11:18.840Z",
+  "brand": {
+    "name": "Botline",
+    "tag": "LEONLINK PRESENTS",
+    "accent": "#3ce0c2",
+    "accent2": "#8b7dff"
+  },
   "types": [
     {
-      "id": "blog",
-      "name": "Blog",
-      "hours": 2,
       "checkinHours": 6,
+      "hours": 2,
+      "id": "blog",
       "color": "#6ea8fe",
+      "name": "Blog",
       "checkpoints": [
         "Brief locked: angle, audience, keyword",
         "Outline with sources approved",
         "Draft written to the brief",
-        "Facts and sources verified \u2014 every link opens",
+        "Facts and sources verified — every link opens",
         "Title, meta and share image in place",
-        "Published, live URL opens clean"
+        "Published, to github"
       ]
     },
     {
-      "id": "top-5",
-      "name": "Top 5",
-      "hours": 2,
-      "checkinHours": 6,
-      "color": "#f5b544",
-      "checkpoints": [
-        "Five picks, same category, no repeats",
-        "Every pick has a working product link",
-        "Prices and availability checked",
-        "Intro, each pick and the verdict written",
-        "Images in place with alt text",
-        "Published, live URL opens clean"
-      ]
-    },
-    {
-      "id": "game",
-      "name": "Game",
       "hours": 24,
+      "name": "Game",
       "checkinHours": 12,
-      "color": "#a78bfa",
+      "id": "game",
       "checkpoints": [
         "Concept and scope signed off",
         "Core loop playable",
@@ -46,14 +35,13 @@
         "Mobile pass on a real phone",
         "QA: no blockers, restart works",
         "Live URL and loading screen checked"
-      ]
+      ],
+      "color": "#a78bfa"
     },
     {
       "id": "software",
-      "name": "Software",
-      "hours": 24,
-      "checkinHours": 24,
       "color": "#3ce0c2",
+      "name": "Software",
       "checkpoints": [
         "Spec: the core flow written down",
         "First working build",
@@ -61,9 +49,577 @@
         "Empty and error states handled",
         "QA pass, no console errors",
         "Deployed, live URL checked"
-      ]
+      ],
+      "checkinHours": 24,
+      "hours": 24
+    },
+    {
+      "checkpoints": [
+        "Five picks, same category, no repeats",
+        "Every pick has a working product link",
+        "Prices and availability checked",
+        "Intro, each pick and the verdict written",
+        "Images in place with alt text",
+        "Published, live URL opens clean"
+      ],
+      "checkinHours": 6,
+      "hours": 2,
+      "color": "#f5b544",
+      "name": "Top 5",
+      "id": "top-5"
     }
   ],
-  "bots": [],
-  "jobs": []
+  "bots": [
+    {
+      "lastSeenAt": "2026-11-24T19:52:04.879Z",
+      "categories": [],
+      "active": true,
+      "updatedAt": "2026-11-24T07:24:37.214Z",
+      "role": "Builder",
+      "id": "bot-0c08y49q",
+      "name": "Blue eyed robot",
+      "createdAt": "2026-11-24T07:24:37.214Z"
+    },
+    {
+      "id": "bot-df0xjkbo",
+      "updatedAt": "2026-11-24T07:43:37.764Z",
+      "active": true,
+      "name": "Inspector gadget",
+      "role": "Inspector",
+      "categories": [],
+      "lastSeenAt": "2026-11-24T23:32:43.408Z",
+      "createdAt": "2026-11-24T07:43:37.764Z"
+    },
+    {
+      "role": "Builder",
+      "updatedAt": "2026-11-24T07:25:20.059Z",
+      "name": "Sir pocket niche",
+      "lastSeenAt": "2026-11-24T18:45:19.683Z",
+      "categories": [],
+      "createdAt": "2026-11-24T07:25:20.059Z",
+      "active": true,
+      "id": "bot-hbte71bv"
+    },
+    {
+      "updatedAt": "2026-11-24T07:25:52.179Z",
+      "categories": [],
+      "lastSeenAt": "2026-11-24T20:02:31.512Z",
+      "active": true,
+      "createdAt": "2026-11-24T07:25:52.179Z",
+      "role": "Builder",
+      "id": "bot-mf3n5q43",
+      "name": "Treeguy"
+    },
+    {
+      "id": "bot-tjtnvrsd",
+      "createdAt": "2026-11-24T07:24:21.045Z",
+      "updatedAt": "2026-11-24T07:24:21.046Z",
+      "name": "Big Catch Fish",
+      "active": true,
+      "role": "",
+      "categories": [],
+      "lastSeenAt": "2026-11-24T20:52:18.939Z"
+    }
+  ],
+  "jobs": [
+    {
+      "rework": 0,
+      "submittedBy": "Treeguy",
+      "submittedAt": "2026-11-24T18:02:40.906Z",
+      "assignee": "bot-mf3n5q43",
+      "deadline": "2026-11-24T11:27:58.570Z",
+      "status": "Review",
+      "checkinHours": 6,
+      "id": "J-1001",
+      "checkins": [],
+      "updatedAt": "2026-11-24T18:02:40.906Z",
+      "activity": [
+        {
+          "at": "2026-11-24T07:35:36.162Z",
+          "text": "Posted in Blog",
+          "by": "Boss",
+          "kind": "create"
+        },
+        {
+          "by": "Treeguy",
+          "kind": "assign",
+          "text": "Assigned to Treeguy",
+          "at": "2026-11-24T09:27:58.570Z"
+        },
+        {
+          "text": "Completed: Published, live URL opens clean",
+          "at": "2026-11-24T17:56:18.350Z",
+          "kind": "checkpoint",
+          "by": "Boss"
+        },
+        {
+          "by": "Boss",
+          "kind": "checkpoint",
+          "at": "2026-11-24T17:56:20.292Z",
+          "text": "Reopened: Published, live URL opens clean"
+        },
+        {
+          "text": "Checkpoints edited (6)",
+          "at": "2026-11-24T17:56:36.839Z",
+          "kind": "checkpoint",
+          "by": "Boss"
+        },
+        {
+          "at": "2026-11-24T18:02:24.520Z",
+          "kind": "checkpoint",
+          "text": "Completed: Brief locked: angle, audience, keyword",
+          "by": "Treeguy"
+        },
+        {
+          "at": "2026-11-24T18:02:27.984Z",
+          "kind": "checkpoint",
+          "by": "Treeguy",
+          "text": "Completed: Outline with sources approved"
+        },
+        {
+          "kind": "checkpoint",
+          "at": "2026-11-24T18:02:28.346Z",
+          "by": "Treeguy",
+          "text": "Completed: Draft written to the brief"
+        },
+        {
+          "at": "2026-11-24T18:02:28.706Z",
+          "text": "Completed: Facts and sources verified — every link opens",
+          "by": "Treeguy",
+          "kind": "checkpoint"
+        },
+        {
+          "at": "2026-11-24T18:02:29.066Z",
+          "kind": "checkpoint",
+          "by": "Treeguy",
+          "text": "Completed: Title, meta and share image in place"
+        },
+        {
+          "at": "2026-11-24T18:02:29.426Z",
+          "text": "Completed: Published to Github",
+          "by": "Treeguy",
+          "kind": "checkpoint"
+        },
+        {
+          "at": "2026-11-24T18:02:40.906Z",
+          "kind": "review",
+          "by": "Treeguy",
+          "text": "Submitted for review — https://github.com/leonptucker3886-lab/treeguy/blob/main/assignments/blogs/presidents/draft.md"
+        }
+      ],
+      "assignedAt": "2026-11-24T09:27:58.570Z",
+      "checkpoints": [
+        {
+          "at": "2026-11-24T18:02:24.520Z",
+          "id": "cprexqy8pw",
+          "label": "Brief locked: angle, audience, keyword",
+          "done": true,
+          "by": "Treeguy"
+        },
+        {
+          "at": "2026-11-24T18:02:27.984Z",
+          "id": "cp7v46c8pw",
+          "label": "Outline with sources approved",
+          "done": true,
+          "by": "Treeguy"
+        },
+        {
+          "by": "Treeguy",
+          "label": "Draft written to the brief",
+          "done": true,
+          "id": "cpqthyy8pw",
+          "at": "2026-11-24T18:02:28.346Z"
+        },
+        {
+          "by": "Treeguy",
+          "done": true,
+          "at": "2026-11-24T18:02:28.706Z",
+          "label": "Facts and sources verified — every link opens",
+          "id": "cpk9e5e8pw"
+        },
+        {
+          "by": "Treeguy",
+          "id": "cp1on998pw",
+          "done": true,
+          "label": "Title, meta and share image in place",
+          "at": "2026-11-24T18:02:29.066Z"
+        },
+        {
+          "by": "Treeguy",
+          "label": "Published to Github",
+          "id": "cp3k26yv8n",
+          "at": "2026-11-24T18:02:29.426Z",
+          "done": true
+        }
+      ],
+      "createdAt": "2026-11-24T07:35:36.162Z",
+      "brief": "Presidents ranked by statistical data, site sources and 2 runner ups",
+      "assigneeName": "Treeguy",
+      "typeName": "Blog",
+      "deadlineExplicit": false,
+      "title": "Presidents ranked by statistical data",
+      "slaHours": 2,
+      "type": "blog",
+      "submissionNote": "",
+      "createdBy": "Boss",
+      "submissionUrl": "https://github.com/leonptucker3886-lab/treeguy/blob/main/assignments/blogs/presidents/draft.md",
+      "lastCheckinAt": "2026-11-24T09:27:58.570Z",
+      "priority": "Normal",
+      "reviewNote": ""
+    },
+    {
+      "brief": "History of religions site your sources",
+      "slaHours": 2,
+      "createdAt": "2026-11-24T07:36:25.884Z",
+      "priority": "Normal",
+      "assigneeName": "Big Catch Fish",
+      "submittedAt": "2026-11-24T18:04:00.828Z",
+      "activity": [
+        {
+          "at": "2026-11-24T07:36:25.884Z",
+          "text": "Posted in Blog",
+          "by": "Boss",
+          "kind": "create"
+        },
+        {
+          "at": "2026-11-24T09:29:01.214Z",
+          "kind": "assign",
+          "by": "Big Catch Fish",
+          "text": "Assigned to Big Catch Fish"
+        },
+        {
+          "at": "2026-11-24T17:57:04.076Z",
+          "text": "Checkpoints edited (6)",
+          "kind": "checkpoint",
+          "by": "Boss"
+        },
+        {
+          "by": "Big Catch Fish",
+          "text": "Completed: Brief locked: angle, audience, keyword",
+          "kind": "checkpoint",
+          "at": "2026-11-24T18:03:43.554Z"
+        },
+        {
+          "text": "Completed: Outline with sources approved",
+          "by": "Big Catch Fish",
+          "kind": "checkpoint",
+          "at": "2026-11-24T18:03:48.716Z"
+        },
+        {
+          "kind": "checkpoint",
+          "at": "2026-11-24T18:03:49.227Z",
+          "text": "Completed: Draft written to the brief",
+          "by": "Big Catch Fish"
+        },
+        {
+          "at": "2026-11-24T18:03:49.735Z",
+          "kind": "checkpoint",
+          "by": "Big Catch Fish",
+          "text": "Completed: Facts and sources verified — every link opens"
+        },
+        {
+          "by": "Big Catch Fish",
+          "text": "Completed: Title, meta and share image in place",
+          "at": "2026-11-24T18:03:50.243Z",
+          "kind": "checkpoint"
+        },
+        {
+          "at": "2026-11-24T18:03:50.752Z",
+          "kind": "checkpoint",
+          "by": "Big Catch Fish",
+          "text": "Completed: Published, to github"
+        },
+        {
+          "by": "Big Catch Fish",
+          "text": "Submitted for review — https://github.com/leonptucker3886-lab/big-catch-fish/blob/main/assignments/blogs/history-of-earths-religions/draft.md",
+          "at": "2026-11-24T18:04:00.828Z",
+          "kind": "review"
+        }
+      ],
+      "submittedBy": "Big Catch Fish",
+      "createdBy": "Boss",
+      "type": "blog",
+      "typeName": "Blog",
+      "title": "The history of earth's religions",
+      "submissionUrl": "https://github.com/leonptucker3886-lab/big-catch-fish/blob/main/assignments/blogs/history-of-earths-religions/draft.md",
+      "status": "Review",
+      "assignee": "bot-tjtnvrsd",
+      "deadline": "2026-11-24T11:29:01.214Z",
+      "lastCheckinAt": "2026-11-24T09:29:01.214Z",
+      "assignedAt": "2026-11-24T09:29:01.214Z",
+      "submissionNote": "",
+      "checkins": [],
+      "checkinHours": 6,
+      "reviewNote": "",
+      "rework": 0,
+      "updatedAt": "2026-11-24T18:04:00.828Z",
+      "deadlineExplicit": false,
+      "checkpoints": [
+        {
+          "label": "Brief locked: angle, audience, keyword",
+          "by": "Big Catch Fish",
+          "done": true,
+          "id": "cpfwaejb30",
+          "at": "2026-11-24T18:03:43.554Z"
+        },
+        {
+          "by": "Big Catch Fish",
+          "id": "cp2918ob30",
+          "done": true,
+          "label": "Outline with sources approved",
+          "at": "2026-11-24T18:03:48.716Z"
+        },
+        {
+          "by": "Big Catch Fish",
+          "id": "cpoidlrb30",
+          "done": true,
+          "at": "2026-11-24T18:03:49.227Z",
+          "label": "Draft written to the brief"
+        },
+        {
+          "by": "Big Catch Fish",
+          "id": "cpgjnt1b30",
+          "label": "Facts and sources verified — every link opens",
+          "done": true,
+          "at": "2026-11-24T18:03:49.735Z"
+        },
+        {
+          "at": "2026-11-24T18:03:50.243Z",
+          "label": "Title, meta and share image in place",
+          "id": "cpxyse0b31",
+          "by": "Big Catch Fish",
+          "done": true
+        },
+        {
+          "by": "Big Catch Fish",
+          "label": "Published, to github",
+          "id": "cpedkkrg98",
+          "done": true,
+          "at": "2026-11-24T18:03:50.752Z"
+        }
+      ],
+      "id": "J-1002"
+    },
+    {
+      "checkinHours": 6,
+      "rework": 0,
+      "createdBy": "Boss",
+      "submittedBy": "Blue eyed robot",
+      "submittedAt": "2026-11-24T18:05:03.725Z",
+      "reviewNote": "",
+      "assignedAt": "2026-11-24T09:35:12.752Z",
+      "checkins": [],
+      "status": "Review",
+      "createdAt": "2026-11-24T07:39:23.417Z",
+      "deadline": "2026-11-24T11:35:12.752Z",
+      "assignee": "bot-0c08y49q",
+      "checkpoints": [
+        {
+          "by": "Blue eyed robot",
+          "done": true,
+          "label": "Brief locked: angle, audience, keyword",
+          "id": "cpcmd2p42m",
+          "at": "2026-11-24T17:52:10.034Z"
+        },
+        {
+          "by": "Blue eyed robot",
+          "id": "cp4otwp42m",
+          "at": "2026-11-24T17:52:13.066Z",
+          "label": "Outline with sources approved",
+          "done": true
+        },
+        {
+          "at": "2026-11-24T17:52:13.581Z",
+          "done": true,
+          "id": "cpyodav42m",
+          "label": "Draft written to the brief",
+          "by": "Blue eyed robot"
+        },
+        {
+          "at": "2026-11-24T18:04:50.345Z",
+          "id": "cpbetk042m",
+          "done": true,
+          "label": "Facts and sources verified — every link opens",
+          "by": "Blue eyed robot"
+        },
+        {
+          "by": "Blue eyed robot",
+          "id": "cpn1ixq42m",
+          "at": "2026-11-24T18:04:50.609Z",
+          "done": true,
+          "label": "Title, meta and share image in place"
+        },
+        {
+          "at": "2026-11-24T18:04:50.866Z",
+          "label": "Published, to github",
+          "done": true,
+          "id": "cpg6hgmi9l",
+          "by": "Blue eyed robot"
+        }
+      ],
+      "brief": "Goes over in depth the human species all of them",
+      "typeName": "Blog",
+      "updatedAt": "2026-11-24T18:05:03.725Z",
+      "activity": [
+        {
+          "at": "2026-11-24T07:39:23.417Z",
+          "kind": "create",
+          "text": "Posted in Blog",
+          "by": "Boss"
+        },
+        {
+          "text": "Assigned to Blue eyed robot",
+          "by": "Blue eyed robot",
+          "kind": "assign",
+          "at": "2026-11-24T09:35:12.752Z"
+        },
+        {
+          "by": "Blue eyed robot",
+          "text": "Completed: Brief locked: angle, audience, keyword",
+          "at": "2026-11-24T17:52:10.034Z",
+          "kind": "checkpoint"
+        },
+        {
+          "text": "Completed: Outline with sources approved",
+          "by": "Blue eyed robot",
+          "kind": "checkpoint",
+          "at": "2026-11-24T17:52:13.066Z"
+        },
+        {
+          "at": "2026-11-24T17:52:13.581Z",
+          "text": "Completed: Draft written to the brief",
+          "by": "Blue eyed robot",
+          "kind": "checkpoint"
+        },
+        {
+          "at": "2026-11-24T17:57:53.337Z",
+          "kind": "checkpoint",
+          "text": "Checkpoints edited (6)",
+          "by": "Boss"
+        },
+        {
+          "at": "2026-11-24T18:04:50.345Z",
+          "kind": "checkpoint",
+          "by": "Blue eyed robot",
+          "text": "Completed: Facts and sources verified — every link opens"
+        },
+        {
+          "at": "2026-11-24T18:04:50.609Z",
+          "text": "Completed: Title, meta and share image in place",
+          "kind": "checkpoint",
+          "by": "Blue eyed robot"
+        },
+        {
+          "text": "Completed: Published, to github",
+          "at": "2026-11-24T18:04:50.866Z",
+          "by": "Blue eyed robot",
+          "kind": "checkpoint"
+        },
+        {
+          "kind": "review",
+          "at": "2026-11-24T18:05:03.725Z",
+          "by": "Blue eyed robot",
+          "text": "Submitted for review — https://github.com/leonptucker3886-lab/blue-eyed-robert/blob/main/assignments/blogs/human-species/draft.md"
+        }
+      ],
+      "lastCheckinAt": "2026-11-24T09:35:12.752Z",
+      "type": "blog",
+      "submissionUrl": "https://github.com/leonptucker3886-lab/blue-eyed-robert/blob/main/assignments/blogs/human-species/draft.md",
+      "priority": "Normal",
+      "slaHours": 2,
+      "assigneeName": "Blue eyed robot",
+      "id": "J-1003",
+      "deadlineExplicit": false,
+      "title": "Human species",
+      "submissionNote": ""
+    },
+    {
+      "activity": [
+        {
+          "by": "Boss",
+          "kind": "create",
+          "text": "Posted in Blog",
+          "at": "2026-11-24T07:40:00.038Z"
+        },
+        {
+          "kind": "assign",
+          "by": "Sir pocket niche",
+          "text": "Assigned to Sir pocket niche",
+          "at": "2026-11-24T17:42:13.459Z"
+        },
+        {
+          "kind": "checkpoint",
+          "by": "Boss",
+          "text": "Checkpoints edited (6)",
+          "at": "2026-11-24T17:58:11.108Z"
+        }
+      ],
+      "rework": 0,
+      "blockedReason": "",
+      "title": "How fireworks were invented",
+      "reviewNote": "",
+      "checkpoints": [
+        {
+          "id": "cpjfzcrwbq",
+          "label": "Brief locked: angle, audience, keyword",
+          "at": "",
+          "done": false,
+          "by": ""
+        },
+        {
+          "at": "",
+          "done": false,
+          "id": "cpmkrq1wbq",
+          "label": "Outline with sources approved",
+          "by": ""
+        },
+        {
+          "id": "cpyqskawbq",
+          "at": "",
+          "done": false,
+          "by": "",
+          "label": "Draft written to the brief"
+        },
+        {
+          "by": "",
+          "id": "cp7155wwbq",
+          "at": "",
+          "done": false,
+          "label": "Facts and sources verified — every link opens"
+        },
+        {
+          "label": "Title, meta and share image in place",
+          "done": false,
+          "by": "",
+          "at": "",
+          "id": "cpkzkcwwbq"
+        },
+        {
+          "by": "",
+          "label": "Published, to github",
+          "id": "cp8av79vz8",
+          "at": "",
+          "done": false
+        }
+      ],
+      "assigneeName": "Sir pocket niche",
+      "createdAt": "2026-11-24T07:40:00.038Z",
+      "typeName": "Blog",
+      "status": "Active",
+      "createdBy": "Boss",
+      "updatedAt": "2026-11-24T17:58:11.108Z",
+      "slaHours": 2,
+      "deadline": "2026-11-24T19:42:13.459Z",
+      "assignee": "bot-hbte71bv",
+      "checkinHours": 6,
+      "id": "J-1004",
+      "lastCheckinAt": "2026-11-24T17:42:13.459Z",
+      "assignedAt": "2026-11-24T17:42:13.459Z",
+      "brief": "Site your sources",
+      "type": "blog",
+      "checkins": [],
+      "priority": "Normal",
+      "deadlineExplicit": false
+    }
+  ]
 }
