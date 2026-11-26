@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-26T05:58:17.435Z",
+  "updatedAt": "2026-11-26T06:06:52.690Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -960,6 +960,87 @@
       "reviewNote": "",
       "rework": 0,
       "updatedAt": "2026-11-26T05:58:16.492Z"
+    },
+    {
+      "id": "J-1007",
+      "type": "game",
+      "typeName": "Game",
+      "title": "New offline downloadable game pack",
+      "brief": "MOBILE FIRST / DESIGNED TO BE PLAYED ONLINE/OFFLINE ON ANDROID MOBILE PHONE CONTROLS MUST MATCH\n\n\nGames should be high quality in replay ability, ( like neon flush). Should be variation of games and concepts and all with the ability to launch by copying and pasting or downloading the .html file into quick edit/ text editor. \n\nEvery game pack should have atleast 5 games and max of 8. \n\nEvery game must be polished and look as good visually as current joustline, sootfather game. \n\nGames will all be mobile tested when possible but must be mobile tested before sent to main / vercel .be sure pack ie downloadable contains a LEONLINK PRESENTS original license etc",
+      "priority": "Normal",
+      "status": "Open",
+      "assignee": null,
+      "assigneeName": "",
+      "createdAt": "2026-11-26T06:06:51.726Z",
+      "createdBy": "Boss",
+      "deadline": null,
+      "deadlineExplicit": false,
+      "slaHours": 120,
+      "checkinHours": 12,
+      "checkpoints": [
+        {
+          "id": "cp02gddtoz",
+          "label": "Concept and scope signed off",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cp0ea6mtoz",
+          "label": "Core loop playable",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpauo1btoz",
+          "label": "Art and audio in",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cp565b6toz",
+          "label": "Mobile pass on a real phone",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpdxq5ltoz",
+          "label": "QA: no blockers, restart works",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cp7jar9toz",
+          "label": "Live URL and loading screen checked",
+          "done": false,
+          "at": "",
+          "by": ""
+        }
+      ],
+      "checkins": [],
+      "activity": [
+        {
+          "at": "2026-11-26T06:06:51.726Z",
+          "by": "Boss",
+          "kind": "create",
+          "text": "Posted in Game (120h once accepted)"
+        }
+      ],
+      "history": [
+        {
+          "at": "2026-11-26T06:06:51.726Z",
+          "by": "Boss",
+          "label": "Posted"
+        }
+      ],
+      "blockedReason": "",
+      "reviewNote": "",
+      "rework": 0,
+      "updatedAt": "2026-11-26T06:06:51.732Z"
     }
   ]
 }
