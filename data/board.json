@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-26T06:11:59.562Z",
+  "updatedAt": "2026-11-26T06:14:39.068Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -1122,6 +1122,87 @@
       "reviewNote": "",
       "rework": 0,
       "updatedAt": "2026-11-26T06:11:58.624Z"
+    },
+    {
+      "id": "J-1009",
+      "type": "software",
+      "typeName": "Software",
+      "title": "CREATE podcast for onetruck",
+      "brief": "1)Create a podcast\n2)service industry related and\n    Small one truck related and\n    Goes live without me in it\n3)must be autonomous",
+      "priority": "Normal",
+      "status": "Open",
+      "assignee": null,
+      "assigneeName": "",
+      "createdAt": "2026-11-26T06:14:38.112Z",
+      "createdBy": "Boss",
+      "deadline": null,
+      "deadlineExplicit": false,
+      "slaHours": 72,
+      "checkinHours": 24,
+      "checkpoints": [
+        {
+          "id": "cpgqa66tk3",
+          "label": "Spec: the core flow written down",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpgk91utk3",
+          "label": "First working build",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cprnn4wtk3",
+          "label": "Core flow complete end to end",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpaux77tk3",
+          "label": "Empty and error states handled",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpujynwtk3",
+          "label": "QA pass, no console errors",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cp75lvatk3",
+          "label": "Deployed, live URL checked",
+          "done": false,
+          "at": "",
+          "by": ""
+        }
+      ],
+      "checkins": [],
+      "activity": [
+        {
+          "at": "2026-11-26T06:14:38.112Z",
+          "by": "Boss",
+          "kind": "create",
+          "text": "Posted in Software (72h once accepted)"
+        }
+      ],
+      "history": [
+        {
+          "at": "2026-11-26T06:14:38.112Z",
+          "by": "Boss",
+          "label": "Posted"
+        }
+      ],
+      "blockedReason": "",
+      "reviewNote": "",
+      "rework": 0,
+      "updatedAt": "2026-11-26T06:14:38.115Z"
     }
   ]
 }
