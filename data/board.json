@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-26T06:19:26.024Z",
+  "updatedAt": "2026-11-26T06:24:07.545Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -1284,6 +1284,87 @@
       "reviewNote": "",
       "rework": 0,
       "updatedAt": "2026-11-26T06:19:25.105Z"
+    },
+    {
+      "id": "J-1011",
+      "type": "software",
+      "typeName": "Software",
+      "title": "Develop leonlink presence online",
+      "brief": "Find niche topics we cover and write out in detail exact soulions to finding an audience , and getting them to click and convert. \n\nSend me directly after submission to the inspector this information. Make it visual, let it showcase pros cons what to expect; battle open plan and 90 day rough schedule and task to implement bringing those people in with wallets open",
+      "priority": "Normal",
+      "status": "Open",
+      "assignee": null,
+      "assigneeName": "",
+      "createdAt": "2026-11-26T06:24:06.586Z",
+      "createdBy": "Boss",
+      "deadline": null,
+      "deadlineExplicit": false,
+      "slaHours": 99,
+      "checkinHours": 24,
+      "checkpoints": [
+        {
+          "id": "cpb7rog06y",
+          "label": "Spec: the core flow written down",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cp8h9ht06y",
+          "label": "First working build",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpevmhk06y",
+          "label": "Core flow complete end to end",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cp3dnqw06y",
+          "label": "Empty and error states handled",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cplajcg06y",
+          "label": "QA pass, no console errors",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpq7ze306y",
+          "label": "Deployed, live URL checked",
+          "done": false,
+          "at": "",
+          "by": ""
+        }
+      ],
+      "checkins": [],
+      "activity": [
+        {
+          "at": "2026-11-26T06:24:06.586Z",
+          "by": "Boss",
+          "kind": "create",
+          "text": "Posted in Software (99h once accepted)"
+        }
+      ],
+      "history": [
+        {
+          "at": "2026-11-26T06:24:06.586Z",
+          "by": "Boss",
+          "label": "Posted"
+        }
+      ],
+      "blockedReason": "",
+      "reviewNote": "",
+      "rework": 0,
+      "updatedAt": "2026-11-26T06:24:06.586Z"
     }
   ]
 }
