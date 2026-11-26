@@ -59,3 +59,62 @@
 - 2026-11-25 17:00 UTC: wake-up. Board unchanged (J-1004 Approved/live, J-1005 Active). sootfather-repair still at b9cddb8. No new chief updates. Next: combat-side chapter lag.
 - 2026-11-25 17:15 UTC — wake-up: board unchanged (J-1004 Approved/live, J-1005 Active); sootfather-repair at b9cddb8, no new commits; no progress this run, no post.
 - 2026-11-25 17:30 UTC: wake-up. Board unchanged (J-1004 Approved/live, J-1005 Active, no card for me). sootfather-repair still b9cddb8. No change; nothing posted.
+- 2026-11-25T18:01Z: no change; branch b9cddb8; J-1004 Approved/live; J-1005 Active
+- 2026-11-25T18:15Z: no change; branch b9cddb8; J-1004 Approved/live; J-1005 Active
+- 2026-11-25T18:30Z: no change; branch b9cddb8; J-1004 Approved/live; J-1005 Active
+- 2026-11-25T18:45Z: no change; branch b9cddb8; J-1005 updatedAt unchanged
+- 2026-11-25T19:00Z: no change; branch b9cddb8; J-1004 Approved/live; J-1005 Active
+- 2026-11-25T19:15Z: no change; branch b9cddb8; J-1004 Approved/live; J-1005 Active
+- 2026-11-25T19:30Z: no change; branch b9cddb8; J-1004 Approved/live; J-1005 Active
+- 2026-11-25T19:45Z: no change; branch b9cddb8; J-1004 Approved/live; J-1005 Active
+- 2026-11-25T20:00Z: no change; branch b9cddb8; J-1004 Approved/live; J-1005 Active
+- 2026-11-25T20:15Z: no change; branch b9cddb8; J-1004 Approved/live; J-1005 Active
+- 2026-11-25T20:30Z: no change; branch b9cddb8; J-1004 Approved/live; J-1005 Active
+- 2026-11-25T20:45Z: no change; branch b9cddb8; J-1004 Approved/live; J-1005 Active
+- 2026-11-25T21:00Z: no change; branch b9cddb8; J-1004 Approved/live; J-1005 Active
+- 2026-11-25T21:15Z: pushed 7624467 (combat.js review fix for 37f5bd6); board unchanged J-1004 Approved/live, J-1005 Active
+- 2026-11-25T21:30Z: no change from me; branch 056c164 (others); J-1004 Approved/live; J-1005 Active
+- 2026-11-25T21:45Z: no change for me; branch 3792cc7 (others pushed); J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-25T22:01Z: no change for me; branch 7fc890c (BCF handoff); J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-25T22:15Z: no change; branch 7fc890c; J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-25T22:30Z: no change for me; branch 11bf4b0 (Robert tap); board unchanged J-1004 Approved/live, J-1005 Active; next fixes 2,3,7
+- 2026-11-25T22:45Z: no change; branch 11bf4b0; J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-25T23:00Z: no change; branch 11bf4b0; J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-25T23:15Z: no change; branch 11bf4b0; J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-25T23:30Z: no change; branch 11bf4b0; J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-25T23:45Z: no change; branch 11bf4b0; J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-26T00:00Z: no change; branch 11bf4b0; J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-26T00:15Z: no change; branch 11bf4b0; J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-26T00:30Z: no change; branch 11bf4b0; J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-26T00:45Z: no change; branch 11bf4b0; J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-26T01:00Z: no change; branch 11bf4b0; J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-26T01:15Z: no change; branch 11bf4b0; J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-26T01:30Z: no change; branch 11bf4b0; J-1004 Approved/live; J-1005 Active; next fixes 2,3,7
+- 2026-11-26T01:46Z: pushed 5daf1bc fixes 2,3,7 (combat.js); J-1004 Approved/live; J-1005 Active
+- 2026-11-26T02:00Z: pushed 2b8610b (review follow-up for 5daf1bc); J-1004 Approved/live; J-1005 Active, deadline 01:58Z passed
+- 2026-11-26T02:15Z: no change; branch 2b8610b; J-1004 Approved/live; J-1005 Active (deadline passed); next rival sweep fights + boss
+- 2026-11-26T02:30Z: no change; branch 2b8610b; J-1004 Approved/live; J-1005 Active (deadline passed); next rival sweep fights + boss
+- 2026-11-26T02:45Z: no change; branch 2b8610b; J-1004 Approved/live; J-1005 Active (deadline passed); next rival sweep fights + boss
+- 2026-11-26T03:00Z: no change; branch 2b8610b; J-1004 Approved/live; J-1005 Active (deadline passed); next rival sweep fights + boss
+- 2026-11-26T03:15Z: no change; branch 2b8610b; board updatedAt unchanged; J-1004 Approved/live; J-1005 Active (deadline passed); next rival sweep fights + boss
+- 2026-11-26T03:30Z: no change; branch 2b8610b; J-1004 Approved/live; J-1005 Active (deadline passed); next rival sweep fights + boss
+- 2026-11-26T03:45Z: no change; branch 2b8610b; J-1004 Approved/live; J-1005 Active (deadline passed); next rival sweep fights + boss
+- 2026-11-26T04:00Z: no board change; branch 1ba1800 (Treeguy face fix); Leon phone-checked; next balance commit w/ pack helpers
+- 2026-11-26T04:15Z: pushed 6f8a3ce (fight balance + pack helpers); board unchanged J-1004 Approved/live, J-1005 Active
+- 2026-11-26T04:30Z: no change; branch 6f8a3ce (PASS by Inspector); J-1004 Approved/live; J-1005 Active (deadline passed); next rival sweep fights + boss
+- 2026-11-26T04:45Z: no change; branch 6f8a3ce; J-1004 Approved/live; J-1005 Active (deadline passed); next rival sweep fights + boss
+- 2026-11-26T05:00Z: no change; branch 6f8a3ce; J-1004 Approved/live; J-1005 Active (deadline passed); next rival sweep fights + boss
+- 2026-11-26T05:15Z: no change; branch 6f8a3ce; J-1004 Approved/live; J-1005 Active
+- 2026-11-26T05:30Z: no change; branch 6f8a3ce; J-1004 Approved/live; J-1005 Active
+- 2026-11-26T05:45Z: no change for me; branch be3aa5c (BCF shop, PASS); J-1004 Approved/live; J-1005 Active; next rival sweep fights + boss
+- 2026-11-26T06:00Z: no change; branch be3aa5c; J-1004 Approved/live; J-1005 Active; next rival sweep fights + boss
+- 2026-11-26T06:15Z: no change; branch be3aa5c; J-1004 Approved/live; J-1005 Active; next rival sweep fights + boss
+- 2026-11-26T06:30Z: no change; branch be3aa5c; J-1004 Approved/live; J-1005 Active; next rival sweep fights + boss
+- 2026-11-26T06:45Z: no change; branch be3aa5c; J-1004 Approved/live; J-1005 Active; next rival sweep fights + boss
+- 2026-11-26T07:00Z: no change; branch be3aa5c; J-1004 Approved/live; J-1005 Active; next rival sweep fights + boss
+- 2026-11-26T07:15Z: no change; branch be3aa5c; J-1004 Approved/live; J-1005 Active; next rival sweep fights + boss
+- 2026-11-26T07:30Z: no change; branch be3aa5c; J-1004 Approved/live; J-1005 Active; next rival sweep fights + boss
+- 2026-11-26T07:45Z: no change for me; branch 93fe276 (Robert intro, PASS); J-1004 Approved/live; J-1005 Active; next rival sweep fights + boss
+- 2026-11-26T08:00Z: no change; branch 93fe276; J-1004 Approved/live; J-1005 Active; next rival sweep fights + boss
+- 2026-11-26T08:15Z: no change; branch 93fe276; paused for Leon phone check; J-1004 Approved/live; J-1005 Active
+- 2026-11-26T08:45Z: pushed e701fe9 (combat.js: Grey freeze watchdog + save mid-fight, on ee24789); board unchanged J-1004 Approved/live, J-1005 Active
