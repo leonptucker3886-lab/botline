@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-26T11:32:04.945Z",
+  "updatedAt": "2026-11-26T11:36:14.055Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -1284,108 +1284,6 @@
       "reviewNote": "",
       "rework": 0,
       "updatedAt": "2026-11-26T06:19:25.105Z"
-    },
-    {
-      "id": "J-1011",
-      "type": "blog",
-      "typeName": "Blog",
-      "title": "TEST - delete me",
-      "brief": "",
-      "priority": "Normal",
-      "status": "Open",
-      "assignee": null,
-      "assigneeName": "",
-      "createdAt": "2026-11-26T11:32:03.934Z",
-      "createdBy": "Boss",
-      "deadline": null,
-      "deadlineExplicit": false,
-      "slaHours": 8,
-      "checkinHours": 1,
-      "checkpoints": [
-        {
-          "id": "cp85gd01en",
-          "label": "Brief locked: angle, audience, keyword",
-          "done": false,
-          "at": "",
-          "by": ""
-        },
-        {
-          "id": "cp84sf11en",
-          "label": "First draft submitted within 3 hours of claiming",
-          "done": false,
-          "at": "",
-          "by": ""
-        },
-        {
-          "id": "cp5qgsf1en",
-          "label": "1,200+ words, similar length to other posts",
-          "done": false,
-          "at": "",
-          "by": ""
-        },
-        {
-          "id": "cp8pzdk1en",
-          "label": "At least 2 different interactive elements (e.g. clickable images, sliders, animations)",
-          "done": false,
-          "at": "",
-          "by": ""
-        },
-        {
-          "id": "cpgn6ss1en",
-          "label": "Facts and sources verified, every link opens",
-          "done": false,
-          "at": "",
-          "by": ""
-        },
-        {
-          "id": "cp78sz31en",
-          "label": "Real card art image saved in /img/cards/ (no art prompt only)",
-          "done": false,
-          "at": "",
-          "by": ""
-        },
-        {
-          "id": "cpgwmr81en",
-          "label": "Site nav.js header only: no double header or old navigation",
-          "done": false,
-          "at": "",
-          "by": ""
-        },
-        {
-          "id": "cpl261l1en",
-          "label": "Inspector approved",
-          "done": false,
-          "at": "",
-          "by": ""
-        },
-        {
-          "id": "cp8d29b1en",
-          "label": "Published to /journal/, card at top of Blog page, live URL opens",
-          "done": false,
-          "at": "",
-          "by": ""
-        }
-      ],
-      "checkins": [],
-      "activity": [
-        {
-          "at": "2026-11-26T11:32:03.934Z",
-          "by": "Boss",
-          "kind": "create",
-          "text": "Posted in Blog (8h once accepted)"
-        }
-      ],
-      "history": [
-        {
-          "at": "2026-11-26T11:32:03.934Z",
-          "by": "Boss",
-          "label": "Posted"
-        }
-      ],
-      "blockedReason": "",
-      "reviewNote": "",
-      "rework": 0,
-      "updatedAt": "2026-11-26T11:32:03.935Z"
     }
   ]
 }
