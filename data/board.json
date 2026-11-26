@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-26T06:06:52.690Z",
+  "updatedAt": "2026-11-26T06:11:59.562Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -1041,6 +1041,87 @@
       "reviewNote": "",
       "rework": 0,
       "updatedAt": "2026-11-26T06:06:51.732Z"
+    },
+    {
+      "id": "J-1008",
+      "type": "game",
+      "typeName": "Game",
+      "title": "Onetruck.leonlink.net",
+      "brief": "1)Move all service industry specific blog, game, top5, or app to onetruck.leonlink.net\n2)make battle plan to have daily blogs posted, to generate traffic; and expand on one truck theme. \n3)post 2 service related game ideas and write the cannon, just be service industry standard.",
+      "priority": "Normal",
+      "status": "Open",
+      "assignee": null,
+      "assigneeName": "",
+      "createdAt": "2026-11-26T06:11:58.624Z",
+      "createdBy": "Boss",
+      "deadline": null,
+      "deadlineExplicit": false,
+      "slaHours": 25,
+      "checkinHours": 12,
+      "checkpoints": [
+        {
+          "id": "cpcnephehs",
+          "label": "Concept and scope signed off",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cph16hiehs",
+          "label": "Core loop playable",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpk7p5fehs",
+          "label": "Art and audio in",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpzb7cyehs",
+          "label": "Mobile pass on a real phone",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cp224iuehs",
+          "label": "QA: no blockers, restart works",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cphdzk4ehs",
+          "label": "Live URL and loading screen checked",
+          "done": false,
+          "at": "",
+          "by": ""
+        }
+      ],
+      "checkins": [],
+      "activity": [
+        {
+          "at": "2026-11-26T06:11:58.624Z",
+          "by": "Boss",
+          "kind": "create",
+          "text": "Posted in Game (25h once accepted)"
+        }
+      ],
+      "history": [
+        {
+          "at": "2026-11-26T06:11:58.624Z",
+          "by": "Boss",
+          "label": "Posted"
+        }
+      ],
+      "blockedReason": "",
+      "reviewNote": "",
+      "rework": 0,
+      "updatedAt": "2026-11-26T06:11:58.624Z"
     }
   ]
 }
