@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-26T06:14:39.068Z",
+  "updatedAt": "2026-11-26T06:19:26.024Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -1203,6 +1203,87 @@
       "reviewNote": "",
       "rework": 0,
       "updatedAt": "2026-11-26T06:14:38.115Z"
+    },
+    {
+      "id": "J-1010",
+      "type": "software",
+      "typeName": "Software",
+      "title": "Moons and cauldrons",
+      "brief": "Moons and cauldrons is a site on leonlink servicing the mystical world with numerology and tarrot. Take away the website as is but keep the 3 card tarrot (watch for cards cutting off [ran out of room]. Refinish this mystic center to resemble the same styling as stich-us or us, with generated art, login, (glow balance) and make it competitive to the top astrological / tarrot apps out there. \nRead reviews of the top compeitiors and compile a list of what users liked and didn't like so you know what's essential to do/ don't do to this one",
+      "priority": "Normal",
+      "status": "Open",
+      "assignee": null,
+      "assigneeName": "",
+      "createdAt": "2026-11-26T06:19:25.105Z",
+      "createdBy": "Boss",
+      "deadline": null,
+      "deadlineExplicit": false,
+      "slaHours": 82,
+      "checkinHours": 24,
+      "checkpoints": [
+        {
+          "id": "cp1jz8sz01",
+          "label": "Spec: the core flow written down",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cp8fgr6z01",
+          "label": "First working build",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpf9m8gz01",
+          "label": "Core flow complete end to end",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpqgr4gz01",
+          "label": "Empty and error states handled",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpfu1fkz01",
+          "label": "QA pass, no console errors",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpgvfvnz01",
+          "label": "Deployed, live URL checked",
+          "done": false,
+          "at": "",
+          "by": ""
+        }
+      ],
+      "checkins": [],
+      "activity": [
+        {
+          "at": "2026-11-26T06:19:25.105Z",
+          "by": "Boss",
+          "kind": "create",
+          "text": "Posted in Software (82h once accepted)"
+        }
+      ],
+      "history": [
+        {
+          "at": "2026-11-26T06:19:25.105Z",
+          "by": "Boss",
+          "label": "Posted"
+        }
+      ],
+      "blockedReason": "",
+      "reviewNote": "",
+      "rework": 0,
+      "updatedAt": "2026-11-26T06:19:25.105Z"
     }
   ]
 }
