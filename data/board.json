@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "updatedAt": "2026-11-25T01:58:56.294Z",
+  "updatedAt": "2026-11-26T05:58:17.435Z",
   "brand": {
     "name": "Botline",
     "tag": "LEONLINK PRESENTS",
@@ -879,6 +879,87 @@
       "assignedAt": "2026-11-25T01:58:55.352Z",
       "lastCheckinAt": "2026-11-25T01:58:55.352Z",
       "updatedAt": "2026-11-25T01:58:55.364Z"
+    },
+    {
+      "id": "J-1006",
+      "type": "game",
+      "typeName": "Game",
+      "title": "Neon Flush game expansion",
+      "brief": "Expand game to last a lot longer (more levels etc)",
+      "priority": "Normal",
+      "status": "Open",
+      "assignee": null,
+      "assigneeName": "",
+      "createdAt": "2026-11-26T05:58:16.491Z",
+      "createdBy": "Boss",
+      "deadline": null,
+      "deadlineExplicit": false,
+      "slaHours": 72,
+      "checkinHours": 12,
+      "checkpoints": [
+        {
+          "id": "cpcdjxbs4s",
+          "label": "Concept and scope signed off",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpe01kns4s",
+          "label": "Core loop playable",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cp5qq36s4s",
+          "label": "Art and audio in",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cpbses6s4s",
+          "label": "Mobile pass on a real phone",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cp5fdpvs4s",
+          "label": "QA: no blockers, restart works",
+          "done": false,
+          "at": "",
+          "by": ""
+        },
+        {
+          "id": "cprmo8os4s",
+          "label": "Live URL and loading screen checked",
+          "done": false,
+          "at": "",
+          "by": ""
+        }
+      ],
+      "checkins": [],
+      "activity": [
+        {
+          "at": "2026-11-26T05:58:16.491Z",
+          "by": "Boss",
+          "kind": "create",
+          "text": "Posted in Game (72h once accepted)"
+        }
+      ],
+      "history": [
+        {
+          "at": "2026-11-26T05:58:16.491Z",
+          "by": "Boss",
+          "label": "Posted"
+        }
+      ],
+      "blockedReason": "",
+      "reviewNote": "",
+      "rework": 0,
+      "updatedAt": "2026-11-26T05:58:16.492Z"
     }
   ]
 }
